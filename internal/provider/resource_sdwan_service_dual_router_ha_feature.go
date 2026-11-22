@@ -28,6 +28,8 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -93,6 +95,10 @@ func (r *ServiceDualRouterHAProfileParcelResource) Schema(ctx context.Context, r
 			"redundancy_groups": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Service VPN Id List").String,
 				Required:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+					setvalidator.SizeAtMost(2),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"group_id": schema.Int64Attribute{
@@ -105,6 +111,9 @@ func (r *ServiceDualRouterHAProfileParcelResource) Schema(ctx context.Context, r
 						"vpn_ids": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"vpn_id": schema.StringAttribute{

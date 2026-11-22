@@ -29,6 +29,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -267,6 +268,9 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 			"router_lsas": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Advertise own router LSA with infinite distance").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(2),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"type": schema.StringAttribute{

@@ -27,6 +27,8 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -92,6 +94,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 			"sequences": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("select definition of rule").String,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
@@ -138,6 +143,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"source_ipv4_prefixes_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -147,6 +155,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"source_ipv6_prefixes_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -156,6 +167,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"destination_ipv4_prefixes_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -165,6 +179,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"destination_ipv6_prefixes_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -174,6 +191,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"destination_fqdns_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -183,6 +203,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("Source Geolocation").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"source_geo_locations_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -192,6 +215,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("Destination Geolocation").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"destination_geo_locations_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -201,6 +227,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"source_ports_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -210,6 +239,9 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"destination_ports_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -219,11 +251,17 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("protocol").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"protocol_names": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"protocol_names_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -233,61 +271,109 @@ func (r *PolicyObjectSecurityRuleSetProfileParcelResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(1),
+							},
 						},
 						"destination_object_group_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(1),
+							},
 						},
 						"source_data_ipv4_prefix_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"source_data_ipv6_prefix_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"destination_data_ipv4_prefix_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"destination_data_ipv6_prefix_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"destination_fqdn_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"source_geo_location_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"destination_geo_location_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"source_port_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"destination_port_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"protocol_name_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 					},
 				},

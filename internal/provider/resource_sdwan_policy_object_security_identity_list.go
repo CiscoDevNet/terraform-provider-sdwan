@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -92,6 +93,10 @@ func (r *PolicyObjectSecurityIdentityListProfileParcelResource) Schema(ctx conte
 			"entries": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Array of Users and User Groups").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+					listvalidator.SizeAtMost(16),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"user": schema.StringAttribute{

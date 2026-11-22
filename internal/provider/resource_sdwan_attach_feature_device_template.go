@@ -23,12 +23,15 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
@@ -54,7 +57,7 @@ func (r *AttachFeatureDeviceTemplateResource) Metadata(ctx context.Context, req 
 
 func (r *AttachFeatureDeviceTemplateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Version: 1,
+		Version: 2,
 		// This description is used by the documentation generator and the language server.
 		MarkdownDescription: helpers.NewAttributeDescription("This resource can attach a feature device template. Due to limitations of the API, once a device template is attached to a device, only one change can be applied per `terraform apply` operation. More information is available [here](https://registry.terraform.io/providers/CiscoDevNet/sdwan/latest/docs/guides/updating_templates).").String,
 
@@ -70,15 +73,14 @@ func (r *AttachFeatureDeviceTemplateResource) Schema(ctx context.Context, req re
 				MarkdownDescription: "The version of the device template",
 				Optional:            true,
 			},
-			"devices": schema.SetNestedAttribute{
-				MarkdownDescription: "List of devices",
+			"devices": schema.MapNestedAttribute{
+				MarkdownDescription: "Devices attached to the device template, keyed by device ID (chassis ID)",
 				Required:            true,
+				Validators: []validator.Map{
+					mapvalidator.KeysAre(stringvalidator.LengthAtLeast(1)),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: "Device ID",
-							Required:            true,
-						},
 						"variables": schema.MapAttribute{
 							MarkdownDescription: "Device variables",
 							ElementType:         types.StringType,
@@ -91,43 +93,57 @@ func (r *AttachFeatureDeviceTemplateResource) Schema(ctx context.Context, req re
 	}
 }
 
-// UpgradeState migrates schema version 0 (devices as a positional list) to version 1 (devices as
-// a set). The element shape is unchanged, so this is purely a collection re-type.
-func (r *AttachFeatureDeviceTemplateResource) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
-	return map[int64]resource.StateUpgrader{
-		0: {
-			PriorSchema: &schema.Schema{
+// attachFeatureDeviceTemplatePriorSchema is the schema before devices became a map: version 0 had
+// devices as a list, version 1 as a set, each element with id and variables.
+func attachFeatureDeviceTemplatePriorSchema(devices func(schema.NestedAttributeObject) schema.Attribute) *schema.Schema {
+	return &schema.Schema{
+		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				Required: true,
+			},
+			"version": schema.Int64Attribute{
+				Optional: true,
+			},
+			"devices": devices(schema.NestedAttributeObject{
 				Attributes: map[string]schema.Attribute{
 					"id": schema.StringAttribute{
 						Required: true,
 					},
-					"version": schema.Int64Attribute{
-						Optional: true,
-					},
-					"devices": schema.ListNestedAttribute{
-						Required: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"id": schema.StringAttribute{
-									Required: true,
-								},
-								"variables": schema.MapAttribute{
-									ElementType: types.StringType,
-									Required:    true,
-								},
-							},
-						},
+					"variables": schema.MapAttribute{
+						ElementType: types.StringType,
+						Required:    true,
 					},
 				},
-			},
-			StateUpgrader: func(ctx context.Context, req resource.UpgradeStateRequest, resp *resource.UpgradeStateResponse) {
-				var prior AttachFeatureDeviceTemplate
-				resp.Diagnostics.Append(req.State.Get(ctx, &prior)...)
-				if resp.Diagnostics.HasError() {
-					return
-				}
-				resp.Diagnostics.Append(resp.State.Set(ctx, prior)...)
-			},
+			}),
+		},
+	}
+}
+
+// upgradeAttachFeatureDeviceTemplateState keys the devices of a version 0 or 1 state by device ID.
+func upgradeAttachFeatureDeviceTemplateState(ctx context.Context, req resource.UpgradeStateRequest, resp *resource.UpgradeStateResponse) {
+	var prior AttachFeatureDeviceTemplate
+	resp.Diagnostics.Append(req.State.Get(ctx, &prior)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	resp.Diagnostics.Append(resp.State.Set(ctx, prior.toConfig())...)
+}
+
+// UpgradeState migrates schema version 0 (devices as a list) and version 1 (devices as a set) to
+// version 2 (devices as a map keyed by device ID).
+func (r *AttachFeatureDeviceTemplateResource) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
+	return map[int64]resource.StateUpgrader{
+		0: {
+			PriorSchema: attachFeatureDeviceTemplatePriorSchema(func(o schema.NestedAttributeObject) schema.Attribute {
+				return schema.ListNestedAttribute{Required: true, NestedObject: o}
+			}),
+			StateUpgrader: upgradeAttachFeatureDeviceTemplateState,
+		},
+		1: {
+			PriorSchema: attachFeatureDeviceTemplatePriorSchema(func(o schema.NestedAttributeObject) schema.Attribute {
+				return schema.SetNestedAttribute{Required: true, NestedObject: o}
+			}),
+			StateUpgrader: upgradeAttachFeatureDeviceTemplateState,
 		},
 	}
 }
@@ -145,7 +161,7 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 	var plan AttachFeatureDeviceTemplate
 
 	// Read plan
-	diags := req.Plan.Get(ctx, &plan)
+	diags := getAttachFeatureDeviceTemplate(ctx, req.Plan, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -179,7 +195,7 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Id.ValueString()))
 
-	diags = resp.State.Set(ctx, &plan)
+	diags = resp.State.Set(ctx, plan.toConfig())
 	resp.Diagnostics.Append(diags...)
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
@@ -189,7 +205,7 @@ func (r *AttachFeatureDeviceTemplateResource) Read(ctx context.Context, req reso
 	var state AttachFeatureDeviceTemplate
 
 	// Read state
-	diags := req.State.Get(ctx, &state)
+	diags := getAttachFeatureDeviceTemplate(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -217,7 +233,7 @@ func (r *AttachFeatureDeviceTemplateResource) Read(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Id.ValueString()))
 
-	diags = resp.State.Set(ctx, &state)
+	diags = resp.State.Set(ctx, state.toConfig())
 	resp.Diagnostics.Append(diags...)
 
 	helpers.SetFlagImporting(ctx, false, resp.Private, &resp.Diagnostics)
@@ -227,13 +243,13 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 	var plan, state AttachFeatureDeviceTemplate
 
 	// Read plan
-	diags := req.Plan.Get(ctx, &plan)
+	diags := getAttachFeatureDeviceTemplate(ctx, req.Plan, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	// Read state
-	diags = req.State.Get(ctx, &state)
+	diags = getAttachFeatureDeviceTemplate(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -307,7 +323,7 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Id.ValueString()))
 
-	diags = resp.State.Set(ctx, &plan)
+	diags = resp.State.Set(ctx, plan.toConfig())
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -315,7 +331,7 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 	var plan, state AttachFeatureDeviceTemplate
 
 	// Read state
-	diags := req.State.Get(ctx, &state)
+	diags := getAttachFeatureDeviceTemplate(ctx, req.State, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -367,12 +383,9 @@ func (r *AttachFeatureDeviceTemplateResource) ImportState(ctx context.Context, r
 		return
 	}
 
-	var devices []AttachFeatureDeviceTemplateDevice
+	devices := map[string]AttachFeatureDeviceTemplateDeviceConfig{}
 	for _, deviceId := range deviceIds {
-		devices = append(devices, AttachFeatureDeviceTemplateDevice{
-			Id:        types.StringValue(deviceId),
-			Variables: variables,
-		})
+		devices[deviceId] = AttachFeatureDeviceTemplateDeviceConfig{Variables: variables}
 	}
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), templateId)...)

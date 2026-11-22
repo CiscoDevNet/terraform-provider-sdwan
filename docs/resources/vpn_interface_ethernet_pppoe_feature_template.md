@@ -106,6 +106,7 @@ resource "sdwan_vpn_interface_ethernet_pppoe_feature_template" "example" {
   shaping_rate                      = 10000000
   qos_map                           = "test"
   qos_map_vpn                       = "test"
+  service_provider_name             = "MyISP"
   bandwidth_upstream                = 214748300
   bandwidth_downstream              = 214748300
   write_rule                        = "RULE1"
@@ -254,6 +255,8 @@ resource "sdwan_vpn_interface_ethernet_pppoe_feature_template" "example" {
   - Choices: `off`, `secondary-only`, `secondary-shared`
   - Default value: `off`
 - `secondary_region_variable` (String) Variable name
+- `service_provider_name` (String) Service Provider Name
+- `service_provider_name_variable` (String) Variable name
 - `shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
   - Range: `8`-`100000000`
 - `shaping_rate_variable` (String) Variable name

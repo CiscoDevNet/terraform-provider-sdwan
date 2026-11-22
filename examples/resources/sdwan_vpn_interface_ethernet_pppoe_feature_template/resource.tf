@@ -89,6 +89,7 @@ resource "sdwan_vpn_interface_ethernet_pppoe_feature_template" "example" {
   shaping_rate                      = 10000000
   qos_map                           = "test"
   qos_map_vpn                       = "test"
+  service_provider_name             = "MyISP"
   bandwidth_upstream                = 214748300
   bandwidth_downstream              = 214748300
   write_rule                        = "RULE1"

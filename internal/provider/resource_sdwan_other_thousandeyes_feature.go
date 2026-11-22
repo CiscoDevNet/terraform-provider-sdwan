@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -93,6 +94,10 @@ func (r *OtherThousandEyesProfileParcelResource) Schema(ctx context.Context, req
 			"virtual_application": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Virtual application Instance").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+					listvalidator.SizeAtMost(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"account_group_token": schema.StringAttribute{

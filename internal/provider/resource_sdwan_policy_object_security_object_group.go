@@ -26,6 +26,8 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -98,12 +100,19 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx contex
 			"entries": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+					listvalidator.SizeAtMost(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"data_ipv4_prefixes": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"data_ipv4_prefixes_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -113,6 +122,9 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"data_ipv6_prefixes_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -122,6 +134,9 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"fqdns_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -131,6 +146,9 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"geo_locations_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -140,6 +158,9 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"ports_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -149,26 +170,46 @@ func (r *PolicyObjectSecurityObjectGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"data_ipv6_prefix_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"fqdn_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"geo_location_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 						"port_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(20),
+							},
 						},
 					},
 				},
