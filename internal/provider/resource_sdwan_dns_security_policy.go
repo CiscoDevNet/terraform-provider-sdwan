@@ -27,6 +27,8 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -129,12 +131,18 @@ func (r *DNSSecurityProfileParcelResource) Schema(ctx context.Context, req resou
 			"target_vpns": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Will be under data field only if matchAllVpn is false, if matchAllVpn is true field should not be in payload, Attribute conditional on `match_all_vpn` equal to `false`").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"vpns": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"umbrella_default": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Field will only be under data field if matchAllVpn is true, otherwise field will be under targetVpns and set per entry").String,

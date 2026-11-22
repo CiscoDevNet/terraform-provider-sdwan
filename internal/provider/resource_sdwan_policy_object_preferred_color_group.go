@@ -26,6 +26,8 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -91,12 +93,18 @@ func (r *PolicyObjectPreferredColorGroupProfileParcelResource) Schema(ctx contex
 			"entries": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Preferred Color Group List").String,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"primary_color_preference": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"primary_path_preference": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("all-paths", "direct-path", "multi-hop-path").String,
@@ -109,6 +117,9 @@ func (r *PolicyObjectPreferredColorGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"secondary_path_preference": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("all-paths", "direct-path", "multi-hop-path").String,
@@ -121,6 +132,9 @@ func (r *PolicyObjectPreferredColorGroupProfileParcelResource) Schema(ctx contex
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"tertiary_path_preference": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("all-paths", "direct-path", "multi-hop-path").String,

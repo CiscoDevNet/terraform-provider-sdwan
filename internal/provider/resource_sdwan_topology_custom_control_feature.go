@@ -28,6 +28,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -101,6 +102,9 @@ func (r *TopologyCustomControlProfileParcelResource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Target VPN list").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
 			},
 			"target_role": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Target role").AddStringEnumDescription("edge-router", "border-router").String,

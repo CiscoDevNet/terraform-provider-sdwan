@@ -29,6 +29,8 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -380,6 +382,9 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			"interface_pairs": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface Pair for active and backup").String,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(8),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"active_interface": schema.StringAttribute{
@@ -607,6 +612,9 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 			"sub_locations": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
@@ -709,6 +717,9 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Sub-location Service VPN").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+							},
 						},
 						"service_vpn_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -717,6 +728,9 @@ func (r *SSEZscalerProfileParcelResource) Schema(ctx context.Context, req resour
 						"internal_ip": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Internal Ip address").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"internal_ip_value": schema.StringAttribute{

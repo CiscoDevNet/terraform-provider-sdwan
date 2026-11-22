@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -93,6 +94,9 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 			"assembly": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"advanced_inspection_profile_policy_id": schema.StringAttribute{
@@ -119,6 +123,9 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 						"entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"source_zone": schema.StringAttribute{
@@ -221,6 +228,9 @@ func (r *EmbeddedSecurityProfileParcelResource) Schema(ctx context.Context, req 
 			"high_speed_logging": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging, Attribute conditional on SD-WAN Manager version `20.18.0` or higher").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(4),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{

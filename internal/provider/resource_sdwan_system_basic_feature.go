@@ -29,6 +29,8 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -370,6 +372,10 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Site Type").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+					setvalidator.SizeAtMost(4),
+				},
 			},
 			"site_types_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -390,6 +396,10 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Affinity Group Preference").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+					setvalidator.SizeAtMost(12),
+				},
 			},
 			"affinity_group_preferences_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -406,6 +416,9 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 			"affinity_per_vrfs": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Affinity Group Number for VRFs").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(4),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"affinity_group_number": schema.Int64Attribute{

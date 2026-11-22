@@ -9,6 +9,7 @@
 - Add `route_policy_id_variable` attribute to `sdwan_service_routing_ospf_feature`, `sdwan_service_routing_ospfv3_ipv4_feature` and `sdwan_service_routing_ospfv3_ipv6_feature` (device-specific route policy, SD-WAN Manager 20.18.5+). Supported on the top-level route policy and on `redistributes[].route_policy_id`; it is only sent to Managers running 20.18.5 or later
 - `resource/sdwan_vpn_interface_ethernet_pppoe_feature_template` - Added `service_provider_name` attribute
 - `data-source/sdwan_vpn_interface_ethernet_pppoe_feature_template` - Added `service_provider_name` attribute
+- Fix generator to honor `minItems`/`maxItems` from the profile parcel JSON schemas: feature/policy resources now generate `listvalidator`/`setvalidator` `SizeAtLeast`/`SizeAtMost` validators for nested lists (e.g. `sequences` in `sdwan_embedded_security_ngfw_policy`) and for string/integer sets (e.g. `source_data_ipv6_prefix_list_ids`, `destination_data_ipv6_prefix_list_ids`, `protocol_name_list_ids`). Configurations that violate these limits, such as an explicitly empty list where the schema requires at least one item, are now rejected at plan time instead of by SD-WAN Manager at apply time
 
 ## 0.11.7
 

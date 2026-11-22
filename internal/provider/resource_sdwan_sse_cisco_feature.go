@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -299,6 +300,9 @@ func (r *SSECiscoProfileParcelResource) Schema(ctx context.Context, req resource
 			"interface_pairs": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface Pair for active and backup").String,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(8),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"active_interface": schema.StringAttribute{
