@@ -9,12 +9,20 @@ description: |-
 
 ## 0.12.0 (unreleased)
 
+- Add `sdwan_policy_object_security_ips_signature_set` resource and data source (SD-WAN Manager 20.18.1+)
+- Add `parcel_names` filter to `sdwan_policy_object_feature_profile_parcels` data source: returns only the parcels whose name is in the set
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
-- The `devices` in `sdwan_attach_feature_device_template` is now a set instead of a list. Previously, adding or removing a single device caused every device positioned after it in the list to render as changed in the Terraform plan. The configuration syntax is unchanged; existing state is migrated automatically.
+- Fix `sdwan_network_hierarchy_security_logging` assigning the same `server1` name to every high speed logging entry on SD-WAN Manager 20.18 and later, causing multiple HSL servers to be rendered inconsistently in the Manager UI. Each entry is now assigned a distinct `server1`-`server4` slot name; Manager versions below 20.18 are unaffected as they do not use this key
+- BREAKING CHANGE: `devices` in `sdwan_attach_feature_device_template` is now a map keyed by device ID instead of a list: `devices = { "<device-id>" = { variables = { ... } } }` replaces `devices = [{ id = "<device-id>", variables = { ... } }]`. Adding or removing a device, or changing one of its variables, now shows only that device (and only the changed variable) in the plan. Existing state is migrated automatically; configurations must move to the map syntax.
+- Fix `sdwan_transport_cellular_profile_feature` failing to create a profile with `profile_id = 1` on SD-WAN Manager 20.18+ (`Invalid Json Payload`, `networkSlicing`): the `networkSlicing` block is no longer sent when `slice_type` is not configured
+- Add `route_policy_id_variable` attribute to `sdwan_service_routing_ospf_feature`, `sdwan_service_routing_ospfv3_ipv4_feature` and `sdwan_service_routing_ospfv3_ipv6_feature` (device-specific route policy, SD-WAN Manager 20.18.5+). Supported on the top-level route policy and on `redistributes[].route_policy_id`; it is only sent to Managers running 20.18.5 or later
+- `resource/sdwan_vpn_interface_ethernet_pppoe_feature_template` - Added `service_provider_name` attribute
+- `data-source/sdwan_vpn_interface_ethernet_pppoe_feature_template` - Added `service_provider_name` attribute
 - Fix generator to honor `minItems`/`maxItems` from the profile parcel JSON schemas: feature/policy resources now generate `listvalidator`/`setvalidator` `SizeAtLeast`/`SizeAtMost` validators for nested lists (e.g. `sequences` in `sdwan_embedded_security_ngfw_policy`) and for string/integer sets (e.g. `source_data_ipv6_prefix_list_ids`, `destination_data_ipv6_prefix_list_ids`, `protocol_name_list_ids`). Configurations that violate these limits, such as an explicitly empty list where the schema requires at least one item, are now rejected at plan time instead of by SD-WAN Manager at apply time
 
 ## 0.11.7
 
+- Add `sdwan_transport_wan_vpn_interface_dsl_ipoe_feature` resource and data source support for both 20.15 and 20.18+
 - Add `sdwan_policy_object_security_data_ipv6_prefix_list` resource and data source (SD-WAN Manager 20.18+)
 - Add `sdwan_wan_edge_certificate_validate` and `sdwan_send_wan_edge_list_to_controllers` resources to manage WAN edge certificate validity and push the certificate list to the controllers, with drift detection based on the Manager's out-of-sync state
 - Add 20.18 Security Object Group and Rule Set policy-object resources and data sources

@@ -117,3 +117,5 @@ data_source_filter:
   model_name: str()
   description: str(required=False)
   list_attribute: str()
+  type: enum('String', 'Set', required=False) # String (default): the item attribute equals the value; Set: a set of strings, the item attribute is one of them (an empty set matches nothing)
+  item_attribute: str(required=False) # tf_name of the list item attribute compared, when it differs from tf_name

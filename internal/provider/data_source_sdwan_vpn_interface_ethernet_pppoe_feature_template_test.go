@@ -106,6 +106,7 @@ func TestAccDataSourceSdwanVPNInterfaceEthernetPPPoEFeatureTemplate(t *testing.T
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "shaping_rate", "10000000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "qos_map", "test"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "qos_map_vpn", "test"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "service_provider_name", "MyISP"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "bandwidth_upstream", "214748300"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "bandwidth_downstream", "214748300"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_ethernet_pppoe_feature_template.test", "write_rule", "RULE1"))
@@ -219,6 +220,7 @@ func testAccDataSourceSdwanVPNInterfaceEthernetPPPoEFeatureTemplateConfig() stri
 	config += `	shaping_rate = 10000000` + "\n"
 	config += `	qos_map = "test"` + "\n"
 	config += `	qos_map_vpn = "test"` + "\n"
+	config += `	service_provider_name = "MyISP"` + "\n"
 	config += `	bandwidth_upstream = 214748300` + "\n"
 	config += `	bandwidth_downstream = 214748300` + "\n"
 	config += `	write_rule = "RULE1"` + "\n"

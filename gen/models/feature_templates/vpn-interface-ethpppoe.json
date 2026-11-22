@@ -1799,6 +1799,24 @@
                 "variable", 
                 "ignore"
             ]
+        },
+        {
+            "dataPath": [],
+            "dataType": {
+                "max": 128,
+                "min": 1,
+                "type": "string"
+            },
+            "defaultOption": "ignore",
+            "description": "Service Provider",
+            "details": "Service Provider Name",
+            "key": "service-provider",
+            "objectType": "object",
+            "optionType": [
+                "constant",
+                "variable",
+                "ignore"
+            ]
         }, 
         {
             "dataPath": [], 

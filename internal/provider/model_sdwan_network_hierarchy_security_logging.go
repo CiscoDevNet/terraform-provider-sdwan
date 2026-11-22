@@ -20,6 +20,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"sort"
 
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -85,14 +86,33 @@ func (data NetworkHierarchySecurityLogging) toBody(ctx context.Context, ver *ver
 
 	if len(data.HighSpeedLogging) > 0 {
 		body, _ = sjson.Set(body, "data.highSpeedLogging", []interface{}{})
-		for _, entry := range data.HighSpeedLogging {
+
+		// `high_speed_logging` is a Set, so the element order delivered by the
+		// framework is not guaranteed to be stable across plans. Sort a copy on a
+		// deterministic key so the server1..server4 slot names assigned below stay
+		// bound to the same entry between applies. The copy keeps Terraform state,
+		// fromBody and hasChanges untouched.
+		entries := make([]NetworkHierarchySecurityLoggingHighSpeedEntry, len(data.HighSpeedLogging))
+		copy(entries, data.HighSpeedLogging)
+		sort.SliceStable(entries, func(a, b int) bool {
+			if entries[a].Vrf.ValueString() != entries[b].Vrf.ValueString() {
+				return entries[a].Vrf.ValueString() < entries[b].Vrf.ValueString()
+			}
+			if entries[a].ServerIp.ValueString() != entries[b].ServerIp.ValueString() {
+				return entries[a].ServerIp.ValueString() < entries[b].ServerIp.ValueString()
+			}
+			return entries[a].Port.ValueInt64() < entries[b].Port.ValueInt64()
+		})
+
+		for i, entry := range entries {
 			itemBody := ""
-			// `name` (server1-server4) is a positional profile identifier that
-			// SD-WAN Manager 20.18+ requires but auto-derives when omitted. It is
-			// not a user-facing config attribute; emit "server1" for the single
-			// supported entry on 20.18+ and omit entirely on earlier versions.
+			// `name` (server1-server4) is a positional slot identifier that SD-WAN
+			// Manager 20.18+ expects on every high speed logging entry. It is derived
+			// from the entry position, is not user-configurable, and is therefore not
+			// exposed in the Terraform schema. Manager versions below 20.18 have no
+			// such key, so it is omitted entirely there.
 			if ver.GreaterThanOrEqual(version.Must(version.NewVersion("20.18.0"))) {
-				itemBody, _ = sjson.Set(itemBody, "name", "server1")
+				itemBody, _ = sjson.Set(itemBody, "name", fmt.Sprintf("server%d", i+1))
 			}
 			if !entry.Vrf.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "vrf.optionType", "global")

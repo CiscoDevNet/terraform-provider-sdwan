@@ -178,10 +178,18 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 			{{- end}}
 			{{- end}}
 			{{- range .DataSourceFilters}}
+			{{- if eq .Type "Set"}}
+			"{{.TfName}}": schema.SetAttribute{
+				MarkdownDescription: "{{.Description}}",
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
+			{{- else}}
 			"{{.TfName}}": schema.StringAttribute{
 				MarkdownDescription: "{{.Description}}",
 				Optional:            true,
 			},
+			{{- end}}
 			{{- end}}
 		},
 	}

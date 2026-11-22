@@ -28,6 +28,7 @@ data "sdwan_policy_object_feature_profile_parcels" "example" {
 ### Optional
 
 - `created_by` (String) Filter by creator (e.g. 'system' for system-created parcels)
+- `parcel_names` (Set of String) Filter by parcel name; only parcels whose name is in this set are returned (an empty set returns none)
 - `parcel_type` (String) Filter by parcel type (e.g. 'app-list', 'data-prefix')
 
 ### Read-Only

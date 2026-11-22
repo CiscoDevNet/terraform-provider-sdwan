@@ -227,6 +227,11 @@ type DataSourceFilter struct {
 	ModelName     string `yaml:"model_name"`
 	Description   string `yaml:"description"`
 	ListAttribute string `yaml:"list_attribute"`
+	// Type is "String" (default: the item attribute must equal the value) or "Set" (a set of strings:
+	// the item attribute must be one of them; an empty set matches nothing).
+	Type string `yaml:"type"`
+	// ItemAttribute is the tf_name of the list item attribute compared; defaults to TfName.
+	ItemAttribute string `yaml:"item_attribute"`
 }
 
 // IntRange represents a single integer range with min and max values

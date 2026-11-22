@@ -21,6 +21,12 @@ data_source_filters:
     model_name: parcelType
     description: Filter by parcel type (e.g. 'app-list', 'data-prefix')
     list_attribute: parcels
+  - tf_name: parcel_names
+    model_name: payload.name
+    type: Set
+    item_attribute: parcel_name
+    description: Filter by parcel name; only parcels whose name is in this set are returned (an empty set returns none)
+    list_attribute: parcels
 attributes:
   - tf_name: feature_profile_id
     reference: true
