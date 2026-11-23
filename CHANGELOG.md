@@ -1,5 +1,6 @@
 ## 0.12.0 (unreleased)
 
+- Fix `sdwan_service_lan_vpn_interface_ipsec_feature` and `sdwan_transport_wan_vpn_interface_ipsec_feature` failing on SD-WAN Manager 20.18.5 when `shutdown` is not set: the default sent is now `false` from 20.18.5 and stays `true` on earlier versions
 - Add `sdwan_policy_object_security_ips_signature_set` resource and data source (SD-WAN Manager 20.18.1+)
 - Add `parcel_names` filter to `sdwan_policy_object_feature_profile_parcels` data source: returns only the parcels whose name is in the set
 - Add `sdwan_sig_feature` resource and data source (SIG feature of the SIG Security feature profile, SD-WAN Manager 20.15 and later, `tunnel_route_via` from 20.18.1: `sig_provider` Umbrella, Zscaler or Generic, GRE and IPsec tunnels, interface pairs and trackers)
