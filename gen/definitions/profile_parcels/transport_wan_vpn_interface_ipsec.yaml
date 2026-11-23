@@ -27,6 +27,10 @@ attributes:
     minimum_test_value: '"ipsec987"'
   - model_name: shutdown
     example: true
+    # SD-WAN Manager 20.18.5 changed the default to false and rejects true
+    version_defaults:
+      - min_version: 20.18.5
+        value: false
   - model_name: multiplexing
     example: false
   - model_name: tunnelMode

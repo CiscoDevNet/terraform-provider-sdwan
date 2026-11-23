@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -107,7 +108,7 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.
 				Optional:            true,
 			},
 			"shutdown": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Administrative state").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Administrative state").AddDefaultValueDescription("true").AddVersionDefaultValueDescription("20.18.5", "false").String,
 				Optional:            true,
 			},
 			"shutdown_variable": schema.StringAttribute{
@@ -566,7 +567,9 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Create(ctx context.
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
 
 	// Create object
-	body := plan.toBody(ctx)
+
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
@@ -657,7 +660,8 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Update(ctx context.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
+	ver := version.Must(version.NewVersion(r.client.ManagerVersion))
+	body := plan.toBody(ctx, ver)
 
 	// Opting a secret into its write-only twin moves the same value from "x" to
 	// "x_wo". Both spellings serialise to the same payload path, so the body built
@@ -668,7 +672,7 @@ func (r *TransportWANVPNInterfaceIPSECProfileParcelResource) Update(ctx context.
 	//
 	// Only this migration case can produce equal bodies. Rotating the secret, or
 	// changing any other attribute, yields a different body and still PUTs.
-	if helpers.JSONEqual(body, state.toBody(ctx)) {
+	if helpers.JSONEqual(body, state.toBody(ctx, ver)) {
 		plan.Version = state.Version
 		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
 		diags = resp.State.Set(ctx, &plan)

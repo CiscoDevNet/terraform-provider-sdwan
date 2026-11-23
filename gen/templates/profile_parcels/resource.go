@@ -122,7 +122,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					.AddFloatRangeDescription({{.MinFloat}}, {{.MaxFloat}})
 					{{- end -}}
 					{{- if .DefaultValue -}}
-					.AddDefaultValueDescription("{{.DefaultValue}}")
+					.AddDefaultValueDescription("{{.DefaultValue}}"){{range .VersionDefaults}}.AddVersionDefaultValueDescription("{{.MinVersion}}", "{{.Value}}"){{end}}
 					{{- end -}}
 					{{- if len .MutualExclusivityNote -}}
 					.AddNote("{{.MutualExclusivityNote}}")
@@ -223,7 +223,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								.AddFloatRangeDescription({{.MinFloat}}, {{.MaxFloat}})
 								{{- end -}}
 								{{- if .DefaultValue -}}
-								.AddDefaultValueDescription("{{.DefaultValue}}")
+								.AddDefaultValueDescription("{{.DefaultValue}}"){{range .VersionDefaults}}.AddVersionDefaultValueDescription("{{.MinVersion}}", "{{.Value}}"){{end}}
 								{{- end -}}
 								{{- if len .MutualExclusivityNote -}}
 								.AddNote("{{.MutualExclusivityNote}}")
@@ -320,7 +320,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											.AddFloatRangeDescription({{.MinFloat}}, {{.MaxFloat}})
 											{{- end -}}
 											{{- if .DefaultValue -}}
-											.AddDefaultValueDescription("{{.DefaultValue}}")
+											.AddDefaultValueDescription("{{.DefaultValue}}"){{range .VersionDefaults}}.AddVersionDefaultValueDescription("{{.MinVersion}}", "{{.Value}}"){{end}}
 											{{- end -}}
 											{{- if len .MutualExclusivityNote -}}
 											.AddNote("{{.MutualExclusivityNote}}")
@@ -417,7 +417,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														.AddFloatRangeDescription({{.MinFloat}}, {{.MaxFloat}})
 														{{- end -}}
 														{{- if .DefaultValue -}}
-														.AddDefaultValueDescription("{{.DefaultValue}}")
+														.AddDefaultValueDescription("{{.DefaultValue}}"){{range .VersionDefaults}}.AddVersionDefaultValueDescription("{{.MinVersion}}", "{{.Value}}"){{end}}
 														{{- end -}}
 														{{- if len .MutualExclusivityNote -}}
 														.AddNote("{{.MutualExclusivityNote}}")

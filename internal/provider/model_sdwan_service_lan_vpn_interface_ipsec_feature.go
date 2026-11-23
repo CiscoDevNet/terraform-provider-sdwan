@@ -24,6 +24,7 @@ import (
 	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -126,7 +127,7 @@ func (data ServiceLANVPNInterfaceIPSec) getPath() string {
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
+func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context, ver *version.Version) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -152,7 +153,7 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 	} else if data.Shutdown.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"shutdown.optionType", "default")
-			body, _ = sjson.Set(body, path+"shutdown.value", true)
+			body, _ = sjson.Set(body, path+"shutdown.value", helpers.DefaultForVersion(ver, true, helpers.VersionDefault{MinVersion: "20.18.5", Value: false}))
 		}
 	} else {
 		if true {

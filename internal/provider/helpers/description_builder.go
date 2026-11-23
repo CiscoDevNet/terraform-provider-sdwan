@@ -40,6 +40,11 @@ func (d *AttributeDescription) AddDefaultValueDescription(defaultValue string) *
 	return d
 }
 
+func (d *AttributeDescription) AddVersionDefaultValueDescription(minVersion, defaultValue string) *AttributeDescription {
+	d.String = fmt.Sprintf("%s\n  - Default value from SD-WAN Manager version `%s`: `%s`", d.String, minVersion, defaultValue)
+	return d
+}
+
 func (d *AttributeDescription) AddStringEnumDescription(values ...string) *AttributeDescription {
 	v := make([]string, len(values))
 	for i, value := range values {

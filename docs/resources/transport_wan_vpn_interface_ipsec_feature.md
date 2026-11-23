@@ -154,6 +154,7 @@ resource "sdwan_transport_wan_vpn_interface_ipsec_feature" "example" {
 - `perfect_forward_secrecy_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
+  - Default value from SD-WAN Manager version `20.18.5`: `false`
 - `shutdown_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name

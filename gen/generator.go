@@ -319,6 +319,14 @@ type YamlConfigAttribute struct {
 	ForceInclude            bool                           `yaml:"force_include"`
 	WriteAsDefault          bool                           `yaml:"write_as_default"`
 	ElementOptionType       bool                           `yaml:"element_option_type"`
+	VersionDefaults         []YamlConfigVersionDefault     `yaml:"version_defaults"`
+}
+
+// YamlConfigVersionDefault is the default value sent for an unset attribute from a Manager version
+// onwards, for a default that changed between Manager versions. List them in ascending min_version order.
+type YamlConfigVersionDefault struct {
+	MinVersion string `yaml:"min_version"`
+	Value      string `yaml:"value"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -573,9 +581,13 @@ func resolveConditionTfOnly(attributes []YamlConfigAttribute) {
 }
 
 // HasMinVersionCondition recursively checks if any attribute in the list (or nested attributes)
-// has a conditional_attribute with a condition of type "MinVersion".
+// has a conditional_attribute with a condition of type "MinVersion", or version_defaults:
+// both need the Manager version in toBody.
 func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
+		if len(attr.VersionDefaults) > 0 {
+			return true
+		}
 		for _, cond := range attr.ConditionalAttribute.Conditions {
 			if cond.Type == "MinVersion" {
 				return true
@@ -591,6 +603,26 @@ func HasMinVersionCondition(attributes []YamlConfigAttribute) bool {
 		}
 	}
 	return false
+}
+
+// DefaultValueExpr returns the Go expression toBody sends as the value of an unset attribute:
+// the default literal, or with version_defaults a helpers.DefaultForVersion call that picks
+// the default for the connected Manager version.
+func DefaultValueExpr(attr YamlConfigAttribute) string {
+	literal := func(v string) string {
+		if attr.Type == "String" {
+			return `"` + v + `"`
+		}
+		return v
+	}
+	if len(attr.VersionDefaults) == 0 {
+		return literal(attr.DefaultValue)
+	}
+	expr := "helpers.DefaultForVersion(ver, " + literal(attr.DefaultValue)
+	for _, d := range attr.VersionDefaults {
+		expr += fmt.Sprintf(", helpers.VersionDefault{MinVersion: %q, Value: %s}", d.MinVersion, literal(d.Value))
+	}
+	return expr + ")"
 }
 
 // HasStringValidator recursively checks if any attribute needs the stringvalidator package.
@@ -1071,6 +1103,7 @@ var functions = template.FuncMap{
 	"buildConditionalLogic":            BuildConditionalLogic,
 	"buildConditionalDescription":      BuildConditionalDescription,
 	"hasMinVersionCondition":           HasMinVersionCondition,
+	"defaultValueExpr":                 DefaultValueExpr,
 	"hasStringValidator":               HasStringValidator,
 	"hasRegexpValidator":               HasRegexpValidator,
 	"hasFloat64Validator":              HasFloat64Validator,
