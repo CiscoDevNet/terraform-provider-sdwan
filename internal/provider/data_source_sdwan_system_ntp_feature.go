@@ -156,26 +156,56 @@ func (d *SystemNTPProfileParcelDataSource) Schema(ctx context.Context, req datas
 						},
 						"md5_value": schema.StringAttribute{
 							MarkdownDescription: "Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"md5_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"md5_value_wo": schema.StringAttribute{
+							MarkdownDescription: "Enter cleartext or AES-encrypted MD5 authentication key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"md5_value_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `md5_value_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+							Computed:            true,
+						},
 						"hmac_sha2_value": schema.StringAttribute{
 							MarkdownDescription: "HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes)",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"hmac_sha2_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"hmac_sha2_value_wo": schema.StringAttribute{
+							MarkdownDescription: "HMAC-SHA2-256 (digest length = 256 bits, key length = [1-32] bytes)",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"hmac_sha2_value_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `hmac_sha2_value_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+							Computed:            true,
+						},
 						"cmac_aes128_value": schema.StringAttribute{
 							MarkdownDescription: "CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes)",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"cmac_aes128_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"cmac_aes128_value_wo": schema.StringAttribute{
+							MarkdownDescription: "CMAC-AES-128 (digest length = 128 bits, key length = [16 or 32] bytes)",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"cmac_aes128_value_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `cmac_aes128_value_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 					},

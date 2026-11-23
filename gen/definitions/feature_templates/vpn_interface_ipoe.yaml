@@ -83,6 +83,7 @@ attributes:
     tf_name: chap_hostname
     example: chap-example
   - model_name: ppp-auth-password
+    sensitive: true
     tf_name: chap_ppp_auth_password
     data_path: [ppp, chap, password]
     example: myPassword
@@ -94,6 +95,7 @@ attributes:
     node_only_container: true
     example: true
   - model_name: ppp-auth-password
+    sensitive: true
     tf_name: pap_ppp_auth_password
     data_path: [ppp, pap, sent-username, username]
     example: myPassword

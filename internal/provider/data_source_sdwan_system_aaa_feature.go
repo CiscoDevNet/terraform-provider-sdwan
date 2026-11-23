@@ -121,10 +121,20 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 						},
 						"password": schema.StringAttribute{
 							MarkdownDescription: "Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"password_wo": schema.StringAttribute{
+							MarkdownDescription: "Set the user password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"privilege": schema.StringAttribute{
@@ -226,18 +236,38 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: "Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									"key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set the Radius server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+										Computed:            true,
+									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: "Set the Radius server shared type 7 encrypted key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"secret_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"secret_key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set the Radius server shared type 7 encrypted key",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"secret_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 										Computed:            true,
 									},
 									"key_enum": schema.StringAttribute{
@@ -322,18 +352,38 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 									},
 									"key": schema.StringAttribute{
 										MarkdownDescription: "Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									"key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set the TACACS server shared key [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+										Computed:            true,
+									},
 									"secret_key": schema.StringAttribute{
 										MarkdownDescription: "Set the TACACS server shared type 7 encrypted key",
+										Sensitive:           true,
 										Computed:            true,
 									},
 									"secret_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"secret_key_wo": schema.StringAttribute{
+										MarkdownDescription: "Set the TACACS server shared type 7 encrypted key",
+										Sensitive:           true,
+										Computed:            true,
+									},
+									"secret_key_wo_version": schema.Int64Attribute{
+										MarkdownDescription: "Rotation trigger for `secret_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 										Computed:            true,
 									},
 									"key_enum": schema.StringAttribute{

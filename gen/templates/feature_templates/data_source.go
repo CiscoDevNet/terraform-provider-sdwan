@@ -95,6 +95,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
 				{{- end}}
+				{{- if .Sensitive}}
+				Sensitive:           true,
+				{{- end}}
 				Computed:            true,
 				{{- if isNestedListSet .}}
 				NestedObject: schema.NestedAttributeObject{
@@ -104,6 +107,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 							MarkdownDescription: "{{.Description}}",
 							{{- if isListSet .}}
 							ElementType:         types.{{.ElementType}}Type,
+							{{- end}}
+							{{- if .Sensitive}}
+							Sensitive:           true,
 							{{- end}}
 							Computed:            true,
 							{{- if isNestedListSet .}}
@@ -115,6 +121,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 										{{- if isListSet .}}
 										ElementType:         types.{{.ElementType}}Type,
 										{{- end}}
+										{{- if .Sensitive}}
+										Sensitive:           true,
+										{{- end}}
 										Computed:            true,
 										{{- if isNestedListSet .}}
 										NestedObject: schema.NestedAttributeObject{
@@ -124,6 +133,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 													MarkdownDescription: "{{.Description}}",
 													{{- if isListSet .}}
 													ElementType:         types.{{.ElementType}}Type,
+													{{- end}}
+													{{- if .Sensitive}}
+													Sensitive:           true,
 													{{- end}}
 													Computed:            true,
 												},

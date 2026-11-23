@@ -69,7 +69,7 @@ resource "sdwan_cisco_wireless_lan_feature_template" "example" {
 - `country` (String) Select country
   - Choices: `AE`, `AR`, `AT`, `AU`, `BA`, `BB`, `BE`, `BG`, `BH`, `BN`, `BO`, `BR`, `BY`, `CA`, `CA2`, `CH`, `CL`, `CM`, `CN`, `CO`, `CR`, `CY`, `CZ`, `DE`, `DK`, `DO`, `DZ`, `EC`, `EE`, `EG`, `ES`, `FI`, `FJ`, `FR`, `GB`, `GH`, `GI`, `GR`, `HK`, `HR`, `HU`, `ID`, `IE`, `IL`, `IO`, `IN`, `IQ`, `IS`, `IT`, `J2`, `J4`, `JM`, `JO`, `KE`, `KN`, `KW`, `KZ`, `LB`, `LI`, `LK`, `LT`, `LU`, `LV`, `LY`, `MA`, `MC`, `ME`, `MK`, `MN`, `MO`, `MT`, `MX`, `MY`, `NL`, `NO`, `NZ`, `OM`, `PA`, `PE`, `PH`, `PH2`, `PK`, `PL`, `PR`, `PT`, `PY`, `QA`, `RO`, `RS`, `RU`, `SA`, `SE`, `SG`, `SI`, `SK`, `TH`, `TN`, `TR`, `TW`, `UA`, `US`, `UY`, `VE`, `VN`, `ZA`
 - `country_variable` (String) Variable name
-- `password` (String) Set management password
+- `password` (String, Sensitive) Set management password
 - `password_variable` (String) Variable name
 - `shutdown_2_4ghz` (Boolean) 2.4GHz Shutdown
   - Default value: `false`
@@ -98,7 +98,7 @@ Optional:
 - `broadcast_ssid` (Boolean) Enable broadcast SSID
   - Default value: `true`
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `passphrase` (String) Set passphrase
+- `passphrase` (String, Sensitive) Set passphrase
 - `passphrase_variable` (String) Variable name
 - `qos_profile` (String) Select QoS profile
   - Choices: `platinum`, `gold`, `silver`, `bronze`
@@ -114,7 +114,7 @@ Optional:
   - Range: `1`-`65535`
   - Default value: `1812`
 - `radius_server_port_variable` (String) Variable name
-- `radius_server_secret` (String) Set RADIUS server shared secret
+- `radius_server_secret` (String, Sensitive) Set RADIUS server shared secret
 - `radius_server_secret_variable` (String) Variable name
 - `security_type` (String) Select security type
   - Choices: `enterprise`, `personal`, `open`

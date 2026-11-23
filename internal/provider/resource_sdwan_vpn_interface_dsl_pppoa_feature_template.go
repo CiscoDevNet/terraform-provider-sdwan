@@ -306,6 +306,7 @@ func (r *VPNInterfaceDSLPPPoAFeatureTemplateResource) Schema(ctx context.Context
 			},
 			"chap_ppp_auth_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Specify ppp authentication Password").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"chap_ppp_auth_password_variable": schema.StringAttribute{
@@ -326,6 +327,7 @@ func (r *VPNInterfaceDSLPPPoAFeatureTemplateResource) Schema(ctx context.Context
 			},
 			"pap_ppp_auth_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Specify ppp authentication Password").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"pap_ppp_auth_password_variable": schema.StringAttribute{

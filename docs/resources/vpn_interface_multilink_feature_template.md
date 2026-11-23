@@ -162,7 +162,7 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 - `bandwidth_upstream_variable` (String) Variable name
 - `chap_hostname` (String) CHAP Hostname
 - `chap_hostname_variable` (String) Variable name
-- `chap_ppp_auth_password` (String) Specify ppp authentication Password
+- `chap_ppp_auth_password` (String, Sensitive) Specify ppp authentication Password
 - `chap_ppp_auth_password_variable` (String) Variable name
 - `clear_dont_fragment_bit` (Boolean) Clear don't fragment bit
   - Default value: `false`
@@ -200,7 +200,7 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 - `multilink_interfaces` (Attributes List) Controller tx-ex List (see [below for nested schema](#nestedatt--multilink_interfaces))
 - `nim_interface_list` (Attributes List) Nim Interface List (see [below for nested schema](#nestedatt--nim_interface_list))
 - `pap_password` (Boolean) PAP outbound Password
-- `pap_ppp_auth_password` (String) Specify ppp authentication Password
+- `pap_ppp_auth_password` (String, Sensitive) Specify ppp authentication Password
 - `pap_ppp_auth_password_variable` (String) Variable name
 - `pap_username` (String) PAP outbound Sent Username
 - `pap_username_variable` (String) Variable name

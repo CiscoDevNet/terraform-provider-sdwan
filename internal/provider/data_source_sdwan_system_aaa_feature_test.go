@@ -47,7 +47,6 @@ func TestAccDataSourceSdwanSystemAAAProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.acct_port", "1813"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.timeout", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.retransmit", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.secret_key", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_enum", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_type", "key"))
 	if os.Getenv("SDWAN_2018") != "" {
@@ -62,7 +61,6 @@ func TestAccDataSourceSdwanSystemAAAProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.port", "49"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.timeout", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.secret_key", "cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.key_enum", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "accounting_rules.0.rule_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_aaa_feature.test", "accounting_rules.0.method", "commands"))

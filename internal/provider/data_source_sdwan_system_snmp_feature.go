@@ -152,10 +152,20 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
 							MarkdownDescription: "Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"name_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"name_wo": schema.StringAttribute{
+							MarkdownDescription: "Set name of the SNMP community [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"name_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `name_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"user_label": schema.StringAttribute{
@@ -224,10 +234,20 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 						},
 						"authentication_password": schema.StringAttribute{
 							MarkdownDescription: "Specify authentication protocol password",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"authentication_password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"authentication_password_wo": schema.StringAttribute{
+							MarkdownDescription: "Specify authentication protocol password",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"authentication_password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `authentication_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"privacy_protocol": schema.StringAttribute{
@@ -240,10 +260,20 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 						},
 						"privacy_password": schema.StringAttribute{
 							MarkdownDescription: "Specify privacy protocol password",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"privacy_password_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"privacy_password_wo": schema.StringAttribute{
+							MarkdownDescription: "Specify privacy protocol password",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"privacy_password_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `privacy_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"group": schema.StringAttribute{

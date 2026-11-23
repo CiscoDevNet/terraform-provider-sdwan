@@ -22,20 +22,40 @@ data "sdwan_cloud_provider_settings" "example" {
 
 ### Read-Only
 
-- `cisco_sse_auth_key` (String) Cisco SSE Authentication Key
-- `cisco_sse_auth_secret` (String) Cisco SSE Authentication Secret
+- `cisco_sse_auth_key` (String, Sensitive) Cisco SSE Authentication Key
+- `cisco_sse_auth_key_wo` (String, Sensitive) Cisco SSE Authentication Key
+- `cisco_sse_auth_key_wo_version` (Number) Rotation trigger for `cisco_sse_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `cisco_sse_auth_secret` (String, Sensitive) Cisco SSE Authentication Secret
+- `cisco_sse_auth_secret_wo` (String, Sensitive) Cisco SSE Authentication Secret
+- `cisco_sse_auth_secret_wo_version` (Number) Rotation trigger for `cisco_sse_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `cisco_sse_context_sharing` (Boolean) Enable Cisco SSE Context Sharing
 - `cisco_sse_org_id` (String) Cisco SSE Organization ID (numeric string)
 - `id` (String) The id of the object
-- `umbrella_auth_key_v2` (String) Umbrella Authentication Key (v2)
-- `umbrella_auth_secret_v2` (String) Umbrella Authentication Secret (v2)
-- `umbrella_dns_auth_key` (String) Umbrella DNS Authentication Key
-- `umbrella_dns_auth_secret` (String) Umbrella DNS Authentication Secret
+- `umbrella_auth_key_v2` (String, Sensitive) Umbrella Authentication Key (v2)
+- `umbrella_auth_key_v2_wo` (String, Sensitive) Umbrella Authentication Key (v2)
+- `umbrella_auth_key_v2_wo_version` (Number) Rotation trigger for `umbrella_auth_key_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `umbrella_auth_secret_v2` (String, Sensitive) Umbrella Authentication Secret (v2)
+- `umbrella_auth_secret_v2_wo` (String, Sensitive) Umbrella Authentication Secret (v2)
+- `umbrella_auth_secret_v2_wo_version` (Number) Rotation trigger for `umbrella_auth_secret_v2_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `umbrella_dns_auth_key` (String, Sensitive) Umbrella DNS Authentication Key
+- `umbrella_dns_auth_key_wo` (String, Sensitive) Umbrella DNS Authentication Key
+- `umbrella_dns_auth_key_wo_version` (Number) Rotation trigger for `umbrella_dns_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `umbrella_dns_auth_secret` (String, Sensitive) Umbrella DNS Authentication Secret
+- `umbrella_dns_auth_secret_wo` (String, Sensitive) Umbrella DNS Authentication Secret
+- `umbrella_dns_auth_secret_wo_version` (Number) Rotation trigger for `umbrella_dns_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `umbrella_org_id` (String) Umbrella Organization ID (numeric string)
-- `umbrella_sig_auth_key` (String) Umbrella SIG Authentication Key
-- `umbrella_sig_auth_secret` (String) Umbrella SIG Authentication Secret
+- `umbrella_sig_auth_key` (String, Sensitive) Umbrella SIG Authentication Key
+- `umbrella_sig_auth_key_wo` (String, Sensitive) Umbrella SIG Authentication Key
+- `umbrella_sig_auth_key_wo_version` (Number) Rotation trigger for `umbrella_sig_auth_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `umbrella_sig_auth_secret` (String, Sensitive) Umbrella SIG Authentication Secret
+- `umbrella_sig_auth_secret_wo` (String, Sensitive) Umbrella SIG Authentication Secret
+- `umbrella_sig_auth_secret_wo_version` (Number) Rotation trigger for `umbrella_sig_auth_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `zscaler_organization` (String) Zscaler Organization
 - `zscaler_partner_base_uri` (String) Zscaler Partner Base URI
-- `zscaler_partner_key` (String) Zscaler Partner Key
-- `zscaler_password` (String) Zscaler Password
+- `zscaler_partner_key` (String, Sensitive) Zscaler Partner Key
+- `zscaler_partner_key_wo` (String, Sensitive) Zscaler Partner Key
+- `zscaler_partner_key_wo_version` (Number) Rotation trigger for `zscaler_partner_key_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
+- `zscaler_password` (String, Sensitive) Zscaler Password
+- `zscaler_password_wo` (String, Sensitive) Zscaler Password
+- `zscaler_password_wo_version` (Number) Rotation trigger for `zscaler_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `zscaler_username` (String) Zscaler Username

@@ -180,6 +180,7 @@ func (r *CiscoSNMPFeatureTemplateResource) Schema(ctx context.Context, req resou
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"view": schema.StringAttribute{
@@ -350,6 +351,7 @@ func (r *CiscoSNMPFeatureTemplateResource) Schema(ctx context.Context, req resou
 						},
 						"community_name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set name of the SNMP community").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"community_name_variable": schema.StringAttribute{

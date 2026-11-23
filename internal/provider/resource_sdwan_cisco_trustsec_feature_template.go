@@ -120,6 +120,7 @@ func (r *CiscoTrustSecFeatureTemplateResource) Schema(ctx context.Context, req r
 			},
 			"credentials_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the password for the device").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"credentials_password_variable": schema.StringAttribute{
@@ -148,6 +149,7 @@ func (r *CiscoTrustSecFeatureTemplateResource) Schema(ctx context.Context, req r
 			},
 			"sxp_default_password": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure SXP default password").String,
+				Sensitive:           true,
 				Optional:            true,
 			},
 			"sxp_default_password_variable": schema.StringAttribute{
@@ -262,6 +264,7 @@ func (r *CiscoTrustSecFeatureTemplateResource) Schema(ctx context.Context, req r
 						},
 						"preshared_key": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("default", "key-chain", "none").AddDefaultValueDescription("none").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("default", "key-chain", "none"),

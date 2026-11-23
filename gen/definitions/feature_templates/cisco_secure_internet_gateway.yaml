@@ -56,6 +56,7 @@ attributes:
         example: 1
         exclude_ignore: true
       - model_name: pre-shared-secret
+        sensitive: true
         tf_name: ike_pre_shared_key
         example: A1234567
       - model_name: ike-rekey-interval
