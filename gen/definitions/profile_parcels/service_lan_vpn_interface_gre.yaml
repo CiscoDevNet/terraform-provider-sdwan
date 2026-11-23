@@ -171,6 +171,7 @@ attributes:
   - model_name: preSharedSecret
     sensitive: true
     write_only_tf: true
+    encrypted: true
     data_path: [basic]
     example: 123
   - model_name: ikeLocalId

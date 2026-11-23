@@ -1078,7 +1078,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 						if t.String() == "variable" {
 							cItem.SecretKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.SecretKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
+								cItem.SecretKey = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.KeyEnum = types.StringNull()
@@ -1145,6 +1148,8 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 									data.RadiusGroups[ni].Servers[nci].KeyVariable = oldCItem.KeyVariable
 
 									data.RadiusGroups[ni].Servers[nci].KeyWoVersion = oldCItem.KeyWoVersion
+									data.RadiusGroups[ni].Servers[nci].SecretKey = oldCItem.SecretKey
+									data.RadiusGroups[ni].Servers[nci].SecretKeyVariable = oldCItem.SecretKeyVariable
 
 									data.RadiusGroups[ni].Servers[nci].SecretKeyWoVersion = oldCItem.SecretKeyWoVersion
 									resultC = append(resultC, data.RadiusGroups[ni].Servers[nci])
@@ -1274,7 +1279,10 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 						if t.String() == "variable" {
 							cItem.SecretKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.SecretKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
+								cItem.SecretKey = types.StringValue(va.String())
+							}
 						}
 					}
 					cItem.KeyEnum = types.StringNull()
@@ -1331,6 +1339,8 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result, fullRead 
 									data.TacacsGroups[ni].Servers[nci].KeyVariable = oldCItem.KeyVariable
 
 									data.TacacsGroups[ni].Servers[nci].KeyWoVersion = oldCItem.KeyWoVersion
+									data.TacacsGroups[ni].Servers[nci].SecretKey = oldCItem.SecretKey
+									data.TacacsGroups[ni].Servers[nci].SecretKeyVariable = oldCItem.SecretKeyVariable
 
 									data.TacacsGroups[ni].Servers[nci].SecretKeyWoVersion = oldCItem.SecretKeyWoVersion
 									resultC = append(resultC, data.TacacsGroups[ni].Servers[nci])

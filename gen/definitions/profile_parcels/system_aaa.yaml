@@ -74,6 +74,7 @@ attributes:
           - model_name: secretKey
             sensitive: true
             write_only_tf: true
+            encrypted: true
             example: cisco123
           - model_name: keyEnum
             example: "7"
@@ -123,6 +124,7 @@ attributes:
           - model_name: secretKey
             sensitive: true
             write_only_tf: true
+            encrypted: true
             example: cisco123
           - model_name: keyEnum
             example: "7"

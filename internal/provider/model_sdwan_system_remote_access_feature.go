@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -497,14 +498,20 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result, 
 			data.PskAuthenticationType = types.StringValue(va.String())
 		}
 	}
-	data.PskAuthenticationPreSharedKey = types.StringNull()
-	data.PskAuthenticationPreSharedKeyVariable = types.StringNull()
-	if t := res.Get(path + "pskAuth.preSharedKey.optionType"); t.Exists() {
-		va := res.Get(path + "pskAuth.preSharedKey.value")
-		if t.String() == "variable" {
-			data.PskAuthenticationPreSharedKeyVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PskAuthenticationPreSharedKey = types.StringValue(va.String())
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.PskAuthenticationPreSharedKey = types.StringNull()
+		data.PskAuthenticationPreSharedKeyVariable = types.StringNull()
+		if t := res.Get(path + "pskAuth.preSharedKey.optionType"); t.Exists() {
+			va := res.Get(path + "pskAuth.preSharedKey.value")
+			if t.String() == "variable" {
+				data.PskAuthenticationPreSharedKeyVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				// Masked secrets returned by the Manager must never be written into state.
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
+					data.PskAuthenticationPreSharedKey = types.StringValue(va.String())
+				}
+			}
 		}
 	}
 	data.RadiusGroupName = types.StringNull()
@@ -527,14 +534,20 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result, 
 			data.AaaSpecifyNamePolicyName = types.StringValue(va.String())
 		}
 	}
-	data.AaaSpecifyNamePolicyPassword = types.StringNull()
-	data.AaaSpecifyNamePolicyPasswordVariable = types.StringNull()
-	if t := res.Get(path + "aaaPolicy.specifyName.password.optionType"); t.Exists() {
-		va := res.Get(path + "aaaPolicy.specifyName.password.value")
-		if t.String() == "variable" {
-			data.AaaSpecifyNamePolicyPasswordVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AaaSpecifyNamePolicyPassword = types.StringValue(va.String())
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.AaaSpecifyNamePolicyPassword = types.StringNull()
+		data.AaaSpecifyNamePolicyPasswordVariable = types.StringNull()
+		if t := res.Get(path + "aaaPolicy.specifyName.password.optionType"); t.Exists() {
+			va := res.Get(path + "aaaPolicy.specifyName.password.value")
+			if t.String() == "variable" {
+				data.AaaSpecifyNamePolicyPasswordVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				// Masked secrets returned by the Manager must never be written into state.
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
+					data.AaaSpecifyNamePolicyPassword = types.StringValue(va.String())
+				}
+			}
 		}
 	}
 	data.AaaDeriveNameFromPeerIdentity = types.StringNull()

@@ -68,6 +68,7 @@ attributes:
     - model_name: radiusServerSecret
       sensitive: true
       write_only_tf: true
+      encrypted: true
       data_path: [securityConfig]
       conditional_attribute:
         conditions:

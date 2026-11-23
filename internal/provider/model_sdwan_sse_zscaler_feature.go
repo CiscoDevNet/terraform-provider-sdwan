@@ -1664,7 +1664,10 @@ func (data *SSEZscaler) fromBody(ctx context.Context, res gjson.Result, fullRead
 				if t.String() == "variable" {
 					item.PreSharedSecretVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.PreSharedSecret = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
+						item.PreSharedSecret = types.StringValue(va.String())
+					}
 				}
 			}
 			item.IkeRekeyInterval = types.Int64Null()
@@ -1813,6 +1816,8 @@ func (data *SSEZscaler) fromBody(ctx context.Context, res gjson.Result, fullRead
 				}
 				if keyMatch {
 					matchedInterfaces[ni] = true
+					data.Interfaces[ni].PreSharedSecret = oldItem.PreSharedSecret
+					data.Interfaces[ni].PreSharedSecretVariable = oldItem.PreSharedSecretVariable
 
 					data.Interfaces[ni].PreSharedSecretWoVersion = oldItem.PreSharedSecretWoVersion
 					resultInterfaces = append(resultInterfaces, data.Interfaces[ni])

@@ -175,25 +175,10 @@ func (data *CloudProviderSettings) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.UmbrellaOrgId = types.StringNull()
 	}
-	if value := res.Get("data.0.umbrellaAuthKeyV2"); value.Exists() {
-		data.UmbrellaAuthKeyV2 = types.StringValue(value.String())
-	} else {
-		data.UmbrellaAuthKeyV2 = types.StringNull()
-	}
 	if value := res.Get("data.0.umbrellaAuthSecretV2"); value.Exists() {
 		data.UmbrellaAuthSecretV2 = types.StringValue(value.String())
 	} else {
 		data.UmbrellaAuthSecretV2 = types.StringNull()
-	}
-	if value := res.Get("data.0.umbrellaSIGAuthKey"); value.Exists() {
-		data.UmbrellaSigAuthKey = types.StringValue(value.String())
-	} else {
-		data.UmbrellaSigAuthKey = types.StringNull()
-	}
-	if value := res.Get("data.0.umbrellaDNSAuthKey"); value.Exists() {
-		data.UmbrellaDnsAuthKey = types.StringValue(value.String())
-	} else {
-		data.UmbrellaDnsAuthKey = types.StringNull()
 	}
 	if value := res.Get("data.0.zscalerOrganization"); value.Exists() {
 		data.ZscalerOrganization = types.StringValue(value.String())
@@ -205,11 +190,6 @@ func (data *CloudProviderSettings) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.ZscalerPartnerBaseUri = types.StringNull()
 	}
-	if value := res.Get("data.0.zscalerPartnerKey"); value.Exists() {
-		data.ZscalerPartnerKey = types.StringValue(value.String())
-	} else {
-		data.ZscalerPartnerKey = types.StringNull()
-	}
 	if value := res.Get("data.0.zscalerUsername"); value.Exists() {
 		data.ZscalerUsername = types.StringValue(value.String())
 	} else {
@@ -219,11 +199,6 @@ func (data *CloudProviderSettings) fromBody(ctx context.Context, res gjson.Resul
 		data.CiscoSseOrgId = types.StringValue(value.String())
 	} else {
 		data.CiscoSseOrgId = types.StringNull()
-	}
-	if value := res.Get("data.0.ciscoSSEAuthKey"); value.Exists() {
-		data.CiscoSseAuthKey = types.StringValue(value.String())
-	} else {
-		data.CiscoSseAuthKey = types.StringNull()
 	}
 	if value := res.Get("data.0.ciscoSSEAuthSecret"); value.Exists() {
 		data.CiscoSseAuthSecret = types.StringValue(value.String())

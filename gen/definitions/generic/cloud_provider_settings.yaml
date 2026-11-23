@@ -18,6 +18,7 @@ attributes:
   - model_name: umbrellaAuthKeyV2
     sensitive: true
     write_only_tf: true
+    write_only: true
     tf_name: umbrella_auth_key_v2
     type: String
     response_data_path: [data, "0"]
@@ -35,6 +36,7 @@ attributes:
   - model_name: umbrellaSIGAuthKey
     sensitive: true
     write_only_tf: true
+    write_only: true
     tf_name: umbrella_sig_auth_key
     type: String
     response_data_path: [data, "0"]
@@ -52,6 +54,7 @@ attributes:
   - model_name: umbrellaDNSAuthKey
     sensitive: true
     write_only_tf: true
+    write_only: true
     tf_name: umbrella_dns_auth_key
     type: String
     response_data_path: [data, "0"]
@@ -81,6 +84,7 @@ attributes:
   - model_name: zscalerPartnerKey
     sensitive: true
     write_only_tf: true
+    write_only: true
     tf_name: zscaler_partner_key
     type: String
     response_data_path: [data, "0"]
@@ -111,6 +115,7 @@ attributes:
   - model_name: ciscoSSEAuthKey
     sensitive: true
     write_only_tf: true
+    write_only: true
     tf_name: cisco_sse_auth_key
     type: String
     response_data_path: [data, "0"]

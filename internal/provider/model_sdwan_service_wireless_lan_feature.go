@@ -513,7 +513,10 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				if t.String() == "variable" {
 					item.RadiusServerSecretVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.RadiusServerSecret = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
+						item.RadiusServerSecret = types.StringValue(va.String())
+					}
 				}
 			}
 			item.Passphrase = types.StringNull()
@@ -561,6 +564,8 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result, 
 				}
 				if keyMatch {
 					matchedSsids[ni] = true
+					data.Ssids[ni].RadiusServerSecret = oldItem.RadiusServerSecret
+					data.Ssids[ni].RadiusServerSecretVariable = oldItem.RadiusServerSecretVariable
 
 					data.Ssids[ni].RadiusServerSecretWoVersion = oldItem.RadiusServerSecretWoVersion
 					data.Ssids[ni].Passphrase = oldItem.Passphrase

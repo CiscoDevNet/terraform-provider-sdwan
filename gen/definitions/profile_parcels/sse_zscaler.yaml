@@ -115,6 +115,7 @@ attributes:
     - model_name: preSharedSecret
       sensitive: true
       write_only_tf: true
+      encrypted: true
       tf_name: pre_shared_secret
       description: Use preshared key to authenticate IKE peer
       example: Cisco123
