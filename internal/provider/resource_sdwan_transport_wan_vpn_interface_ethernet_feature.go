@@ -29,6 +29,8 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -189,6 +191,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"port_channel_lacp_member_links": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `lacp`").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(16),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"interface_id": schema.StringAttribute{
@@ -256,6 +261,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"port_channel_static_member_links": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Port-Channel member links, Attribute conditional on `port_channel_mode` equal to `static`").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(16),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"interface_id": schema.StringAttribute{
@@ -320,6 +328,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"ipv4_secondary_addresses": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Secondary IpV4 Addresses, Attribute conditional on `ipv4_address_type` equal to `static` or `ipv4_address_type_variable` being set").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(4),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"address": schema.StringAttribute{
@@ -351,6 +362,10 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("List of DHCP IPv4 helper addresses (min 1, max 8), Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+					setvalidator.SizeAtMost(8),
+				},
 			},
 			"ipv4_dhcp_helper_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name, Attribute conditional on `port_channel_member_interface` not equal to `true`").String,
@@ -374,6 +389,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"ipv6_dhcp_secondary_address": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("secondary IPv6 addresses, Attribute conditional on `ipv6_address_type` equal to `dynamic` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(2),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"address": schema.StringAttribute{
@@ -404,6 +422,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"ipv6_secondary_addresses": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Static secondary IPv6 addresses, Attribute conditional on `ipv6_address_type` equal to `static` or `ipv6_address_type_variable` being set").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(2),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"address": schema.StringAttribute{
@@ -1223,6 +1244,9 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			"static_nat66": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("static NAT66, Attribute conditional on `nat_ipv6` equal to `true`").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"source_prefix": schema.StringAttribute{

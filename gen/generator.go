@@ -635,6 +635,38 @@ func HasFloat64Validator(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// HasListSizeValidator recursively checks if any List attribute needs the listvalidator package.
+func HasListSizeValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Value != "" {
+			continue
+		}
+		if attr.Type == "List" && (attr.MinList != 0 || attr.MaxList != 0) {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasListSizeValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
+// HasSetSizeValidator recursively checks if any Set attribute needs the setvalidator package.
+func HasSetSizeValidator(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Value != "" {
+			continue
+		}
+		if attr.Type == "Set" && (attr.MinList != 0 || attr.MaxList != 0) {
+			return true
+		}
+		if len(attr.Attributes) > 0 && HasSetSizeValidator(attr.Attributes) {
+			return true
+		}
+	}
+	return false
+}
+
 func HasInt64RangesValidator(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
 		if len(attr.IntRanges) > 0 {
@@ -1043,6 +1075,8 @@ var functions = template.FuncMap{
 	"hasRegexpValidator":               HasRegexpValidator,
 	"hasFloat64Validator":              HasFloat64Validator,
 	"hasInt64RangesValidator":          HasInt64RangesValidator,
+	"hasListSizeValidator":             HasListSizeValidator,
+	"hasSetSizeValidator":              HasSetSizeValidator,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -1477,15 +1511,21 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			} else if attr.Type == "Set" && attr.ElementType == "String" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
-				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
-				//  attr.MinList = value.Int()
-				// }
-				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
-				//  attr.MaxList = value.Int()
-				// }
+				if value := t.Get("properties.value.minItems"); value.Exists() && attr.MinList == 0 {
+					attr.MinList = value.Int()
+				}
+				if value := t.Get("properties.value.maxItems"); value.Exists() && attr.MaxList == 0 {
+					attr.MaxList = value.Int()
+				}
 			} else if attr.Type == "Set" && attr.ElementType == "Int64" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
 				attr.Type = "Set"
 				attr.ElementType = "Int64"
+				if value := t.Get("properties.value.minItems"); value.Exists() && attr.MinList == 0 {
+					attr.MinList = value.Int()
+				}
+				if value := t.Get("properties.value.maxItems"); value.Exists() && attr.MaxList == 0 {
+					attr.MaxList = value.Int()
+				}
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {
 				//  attr.MinInt = value.Int()
 				// }

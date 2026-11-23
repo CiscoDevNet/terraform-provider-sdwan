@@ -68,6 +68,10 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 				Optional:            true,
 				Computed:            true,
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the configuration group",
 				Optional:            true,
@@ -121,47 +125,6 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 			"topology_site_devices": schema.Int64Attribute{
 				MarkdownDescription: "Number of devices per site",
 				Computed:            true,
-			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: "List of devices",
-				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: "Device ID",
-							Computed:            true,
-						},
-						"topology_label": schema.StringAttribute{
-							MarkdownDescription: "Topology label for dual device configuration group (supported from version 20.18.1 onwards)",
-							Computed:            true,
-						},
-						"deploy": schema.BoolAttribute{
-							MarkdownDescription: "Deploy to device if enabled.",
-							Computed:            true,
-						},
-						"variables": schema.SetNestedAttribute{
-							MarkdownDescription: "List of variables",
-							Computed:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"name": schema.StringAttribute{
-										MarkdownDescription: "Variable name",
-										Computed:            true,
-									},
-									"value": schema.StringAttribute{
-										MarkdownDescription: "Variable value",
-										Computed:            true,
-									},
-									"list_value": schema.ListAttribute{
-										MarkdownDescription: "Use this instead of `value` in case value is of type `List`.",
-										ElementType:         types.StringType,
-										Computed:            true,
-									},
-								},
-							},
-						},
-					},
-				},
 			},
 			"feature_versions": schema.ListAttribute{
 				MarkdownDescription: "List of all associated feature versions",
@@ -236,35 +199,6 @@ func (d *ConfigurationGroupDataSource) Read(ctx context.Context, req datasource.
 	}
 
 	config.fromBodyConfigGroup(ctx, res)
-
-	// Read config group devices
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", config.Id.ValueString())
-	res, err = d.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
-
-	config.fromBodyConfigGroupDevices(ctx, res)
-
-	// Read config group devices
-	// The Manager answers HTTP 500 (CFGRP0014/PLGRP0014) when variables are requested for a group with no devices
-	if len(res.Get("devices").Array()) > 0 {
-		path = fmt.Sprintf("/v1/config-group/%v/device/variables/", config.Id.ValueString())
-		res, err = d.client.Get(path)
-		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
-			resp.State.RemoveResource(ctx)
-			return
-		} else if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-			return
-		}
-
-		config.fromBodyConfigGroupDeviceVariables(ctx, res, nil)
-	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

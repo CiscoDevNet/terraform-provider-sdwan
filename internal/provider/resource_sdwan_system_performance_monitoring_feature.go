@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -96,6 +97,10 @@ func (r *SystemPerformanceMonitoringProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Application groups to be monitored").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+					setvalidator.SizeAtMost(71),
+				},
 			},
 			"monitoring_config_enabled": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("UMTS monitoring enable or disable").AddDefaultValueDescription("false").String,
@@ -116,6 +121,10 @@ func (r *SystemPerformanceMonitoringProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("UMTS events").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+					setvalidator.SizeAtMost(2),
+				},
 			},
 		},
 	}

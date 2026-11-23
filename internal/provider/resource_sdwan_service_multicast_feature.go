@@ -29,6 +29,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -345,6 +346,9 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 			"auto_rp_discoveries": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable or disable RP Discovery").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"interface_name": schema.StringAttribute{
@@ -429,6 +433,9 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 			"pim_bsr_candidates": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("bsr candidate Attributes").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtMost(1),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"interface_name": schema.StringAttribute{

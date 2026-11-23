@@ -28,6 +28,8 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -126,6 +128,10 @@ func (r *ServiceIPv6ACLProfileParcelResource) Schema(ctx context.Context, req re
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define match conditions").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"next_header": schema.Int64Attribute{
@@ -202,11 +208,17 @@ func (r *ServiceIPv6ACLProfileParcelResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Select Traffic Class").String,
 										ElementType:         types.Int64Type,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 									"icmp_messages": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("ICMP6 Message").String,
 										ElementType:         types.StringType,
 										Optional:            true,
+										Validators: []validator.Set{
+											setvalidator.SizeAtLeast(1),
+										},
 									},
 								},
 							},
@@ -214,6 +226,10 @@ func (r *ServiceIPv6ACLProfileParcelResource) Schema(ctx context.Context, req re
 						"actions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define list of actions").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+								listvalidator.SizeAtMost(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"accept_counter_name": schema.StringAttribute{
