@@ -74,6 +74,9 @@ func testAccSdwanPolicyGroupConfig_all() string {
 	config += `	description = "My policy group 1"` + "\n"
 	config += `	solution = "sdwan"` + "\n"
 	config += `	feature_profile_ids = [sdwan_application_priority_feature_profile.test.id]` + "\n"
+	config += `	policy_versions = [` + "\n"
+	config += `	  sdwan_application_priority_qos_policy.test.version,` + "\n"
+	config += `	]` + "\n"
 	config += `}` + "\n"
 	return config
 }

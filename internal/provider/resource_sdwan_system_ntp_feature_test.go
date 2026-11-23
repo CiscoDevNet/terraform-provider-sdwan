@@ -37,12 +37,12 @@ func TestAccSdwanSystemNTPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.authentication_key", "41673"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.vpn", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.ntp_version", "4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.source_interface", "Ethernet"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.source_interface", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.prefer_this_ntp_server", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "authentication_keys.0.key_id", "49737"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "authoritative_ntp_server", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "stratum", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "source_interface", "ATM"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "source_interface", "Loopback0"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -93,12 +93,12 @@ func testAccSdwanSystemNTPProfileParcelConfig_all() string {
 	config += `	  authentication_key = 41673` + "\n"
 	config += `	  vpn = 1` + "\n"
 	config += `	  ntp_version = 4` + "\n"
-	config += `	  source_interface = "Ethernet"` + "\n"
+	config += `	  source_interface = "GigabitEthernet1"` + "\n"
 	config += `	  prefer_this_ntp_server = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	authentication_keys = [{` + "\n"
 	config += `	  key_id = 49737` + "\n"
-	config += `	  md5_value = "$CRYPT_CLUSTER"` + "\n"
+	config += `	  md5_value = "md5-key-example"` + "\n"
 	if os.Getenv("SDWAN_2601") != "" {
 		config += `	  hmac_sha2_value = "hmac-sha2-key-example"` + "\n"
 	}
@@ -109,7 +109,7 @@ func testAccSdwanSystemNTPProfileParcelConfig_all() string {
 	config += `	trusted_keys = [49737]` + "\n"
 	config += `	authoritative_ntp_server = false` + "\n"
 	config += `	stratum = 1` + "\n"
-	config += `	source_interface = "ATM"` + "\n"
+	config += `	source_interface = "Loopback0"` + "\n"
 	config += `}` + "\n"
 	return config
 }
