@@ -377,6 +377,7 @@ func testAccSdwanTransportWANVPNInterfaceDSLIPoEProfileParcelConfig_minimum() st
 	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
 	config += `	vdsl_slot = "0/0/0"` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
+	config += `	ipv4_address_type = "dynamic"` + "\n"
 	config += `	tunnel_interface_enabled = true` + "\n"
 	config += `}` + "\n"
 	return config
