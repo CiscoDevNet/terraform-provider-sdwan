@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -268,7 +269,10 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result, f
 				if t.String() == "variable" {
 					item.AccountGroupTokenVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.AccountGroupToken = types.StringValue(va.String())
+					// Masked secrets returned by the Manager must never be written into state.
+					if fullRead || !helpers.IsEncryptedValue(va.String()) {
+						item.AccountGroupToken = types.StringValue(va.String())
+					}
 				}
 			}
 			item.Vpn = types.Int64Null()
@@ -384,22 +388,19 @@ func (data *OtherThousandEyes) fromBody(ctx context.Context, res gjson.Result, f
 					continue
 				}
 				keyMatch := true
-				if keyMatch && (oldItem.AccountGroupTokenVariable.ValueString() != "" || data.VirtualApplication[ni].AccountGroupTokenVariable.ValueString() != "") {
-					if oldItem.AccountGroupTokenVariable.ValueString() != data.VirtualApplication[ni].AccountGroupTokenVariable.ValueString() {
+				if keyMatch && (oldItem.ManagementIpVariable.ValueString() != "" || data.VirtualApplication[ni].ManagementIpVariable.ValueString() != "") {
+					if oldItem.ManagementIpVariable.ValueString() != data.VirtualApplication[ni].ManagementIpVariable.ValueString() {
 						keyMatch = false
 					}
 				} else if keyMatch {
-					if oldItem.AccountGroupToken.ValueString() != data.VirtualApplication[ni].AccountGroupToken.ValueString() {
-						keyMatch = false
-					}
-				}
-				if keyMatch {
-					if oldItem.AccountGroupTokenWo.ValueString() != data.VirtualApplication[ni].AccountGroupTokenWo.ValueString() {
+					if oldItem.ManagementIp.ValueString() != data.VirtualApplication[ni].ManagementIp.ValueString() {
 						keyMatch = false
 					}
 				}
 				if keyMatch {
 					matchedVirtualApplication[ni] = true
+					data.VirtualApplication[ni].AccountGroupToken = oldItem.AccountGroupToken
+					data.VirtualApplication[ni].AccountGroupTokenVariable = oldItem.AccountGroupTokenVariable
 
 					data.VirtualApplication[ni].AccountGroupTokenWoVersion = oldItem.AccountGroupTokenWoVersion
 					resultVirtualApplication = append(resultVirtualApplication, data.VirtualApplication[ni])

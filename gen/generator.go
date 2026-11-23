@@ -1628,6 +1628,10 @@ func rewriteWriteOnlyTF(attrs []YamlConfigAttribute, inSet bool) []YamlConfigAtt
 		if len(attr.Attributes) > 0 {
 			attr.Attributes = rewriteWriteOnlyTF(attr.Attributes, inSet || IsNestedSet(attr) || IsSet(attr))
 		}
+		// Secrets are not reliably echoed by the API, so they must never be list identity keys.
+		if attr.Id && (attr.Sensitive || attr.Encrypted || attr.WriteOnlyTF) {
+			panic(fmt.Sprintf("attribute %q is marked id: true but is a secret (sensitive/encrypted/write_only_tf); secrets cannot be used as list identity keys", attr.TfName))
+		}
 		if !attr.WriteOnlyTF {
 			out = append(out, attr)
 			continue
@@ -1671,6 +1675,7 @@ func rewriteWriteOnlyTF(attrs []YamlConfigAttribute, inSet bool) []YamlConfigAtt
 		wo.WoAttribute = true
 		wo.WoBaseName = base
 		wo.WriteOnly = true
+		wo.Id = false
 		wo.Encrypted = false // read-side restore is meaningless for a value never read
 		wo.Mandatory = false
 		wo.Variable = false // a variable NAME is not a secret; the legacy twin keeps _variable

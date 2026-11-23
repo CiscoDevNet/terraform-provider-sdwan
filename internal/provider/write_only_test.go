@@ -28,10 +28,13 @@ package provider
 // resource_sdwan_*_test.go pattern or it will be overwritten.
 
 import (
+	"context"
 	"regexp"
 	"testing"
 
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+	"github.com/tidwall/gjson"
 )
 
 func TestWriteOnlyConflictsWithLegacyAttribute(t *testing.T) {
@@ -193,4 +196,142 @@ resource "sdwan_other_trustsec_feature" "test" {
 			ExpectError: regexp.MustCompile("Unable to create client"),
 		}},
 	})
+}
+
+// ThousandEyes list-identity regression tests. These call the generated
+// fromBody directly (no controller). virtualApplication items are matched on
+// the non-secret management_ip (teMgmtIp); the token is encrypted and must never
+// be the identity key.
+
+func teAPI(tokenType, tokenValue, mgmtIp, hostname string) gjson.Result {
+	return gjson.Parse(`{"payload":{"name":"te","data":{"virtualApplication":[{` +
+		`"token":{"optionType":"` + tokenType + `","value":"` + tokenValue + `"},` +
+		`"teMgmtIp":{"optionType":"global","value":"` + mgmtIp + `"},` +
+		`"hostname":{"optionType":"global","value":"` + hostname + `"}}]}}}`)
+}
+
+func teState(item OtherThousandEyesVirtualApplication) *OtherThousandEyes {
+	return &OtherThousandEyes{VirtualApplication: []OtherThousandEyesVirtualApplication{item}}
+}
+
+const teIp = "10.0.0.2"
+
+func TestWriteOnlyThousandEyesOptedInKeepsTokenOutOfState(t *testing.T) {
+	d := teState(OtherThousandEyesVirtualApplication{
+		AccountGroupToken:          types.StringNull(),
+		AccountGroupTokenWoVersion: types.Int64Value(1),
+		ManagementIp:               types.StringValue(teIp),
+		Hostname:                   types.StringValue("host-a"),
+	})
+	d.fromBody(context.Background(), teAPI("global", "plaintext-token", teIp, "host-b"), false)
+	if len(d.VirtualApplication) != 1 {
+		t.Fatalf("want 1 item, got %d", len(d.VirtualApplication))
+	}
+	it := d.VirtualApplication[0]
+	if !it.AccountGroupToken.IsNull() {
+		t.Errorf("token leaked into state: %q", it.AccountGroupToken.ValueString())
+	}
+	if it.AccountGroupTokenWoVersion.ValueInt64() != 1 {
+		t.Errorf("wo_version lost: %v", it.AccountGroupTokenWoVersion)
+	}
+	if it.Hostname.ValueString() != "host-b" {
+		t.Errorf("drift not visible: hostname %q", it.Hostname.ValueString())
+	}
+}
+
+func TestWriteOnlyThousandEyesLegacyTokenKept(t *testing.T) {
+	for _, api := range []string{"plaintext-token", "other-token", "$CRYPT_CLUSTER$abcdef"} {
+		d := teState(OtherThousandEyesVirtualApplication{
+			AccountGroupToken:          types.StringValue("plaintext-token"),
+			AccountGroupTokenWoVersion: types.Int64Null(),
+			ManagementIp:               types.StringValue(teIp),
+			Hostname:                   types.StringValue("host-a"),
+		})
+		d.fromBody(context.Background(), teAPI("global", api, teIp, "host-a"), false)
+		if got := d.VirtualApplication[0].AccountGroupToken.ValueString(); got != "plaintext-token" {
+			t.Errorf("api=%q: want old token kept, got %q", api, got)
+		}
+	}
+}
+
+func TestWriteOnlyThousandEyesVariableKept(t *testing.T) {
+	d := teState(OtherThousandEyesVirtualApplication{
+		AccountGroupToken:         types.StringNull(),
+		AccountGroupTokenVariable: types.StringValue("{{te_token}}"),
+		ManagementIp:              types.StringValue(teIp),
+	})
+	d.fromBody(context.Background(), teAPI("variable", "{{te_token}}", teIp, "host-a"), false)
+	it := d.VirtualApplication[0]
+	if it.AccountGroupTokenVariable.ValueString() != "{{te_token}}" || !it.AccountGroupToken.IsNull() {
+		t.Errorf("variable not kept: var=%v token=%v", it.AccountGroupTokenVariable, it.AccountGroupToken)
+	}
+}
+
+func TestWriteOnlyThousandEyesImportFullRead(t *testing.T) {
+	d := &OtherThousandEyes{}
+	d.fromBody(context.Background(), teAPI("global", "plaintext-token", teIp, "host-a"), true)
+	it := d.VirtualApplication[0]
+	if it.AccountGroupToken.ValueString() != "plaintext-token" {
+		t.Errorf("import: token %v", it.AccountGroupToken)
+	}
+	if !it.AccountGroupTokenWoVersion.IsNull() {
+		t.Errorf("import: wo_version should be null, got %v", it.AccountGroupTokenWoVersion)
+	}
+}
+
+func TestWriteOnlyThousandEyesUIAddedItem(t *testing.T) {
+	for name, d := range map[string]*OtherThousandEyes{
+		"nil":   {},
+		"empty": {VirtualApplication: []OtherThousandEyesVirtualApplication{}},
+	} {
+		d.fromBody(context.Background(), teAPI("global", "plaintext-token", teIp, "host-ui"), false)
+		if len(d.VirtualApplication) != 1 || d.VirtualApplication[0].Hostname.ValueString() != "host-ui" {
+			t.Errorf("%s: UI item not appended: %+v", name, d.VirtualApplication)
+		}
+	}
+}
+
+// Known limitation: management_ip is the identity key, so if it is changed out
+// of band (UI) the item no longer matches and is rebuilt from the API. The
+// plaintext token then lands in state and _wo_version is dropped until the next
+// apply re-asserts the configuration. This test pins the current behaviour.
+func TestWriteOnlyThousandEyesManagementIpChangedInUI(t *testing.T) {
+	d := teState(OtherThousandEyesVirtualApplication{
+		AccountGroupToken:          types.StringNull(),
+		AccountGroupTokenWoVersion: types.Int64Value(1),
+		ManagementIp:               types.StringValue(teIp),
+	})
+	d.fromBody(context.Background(), teAPI("global", "plaintext-token", "10.0.0.9", "host-a"), false)
+	if len(d.VirtualApplication) != 1 {
+		t.Fatalf("want 1 item, got %d", len(d.VirtualApplication))
+	}
+	it := d.VirtualApplication[0]
+	if it.ManagementIp.ValueString() != "10.0.0.9" {
+		t.Errorf("management_ip drift not visible: %v", it.ManagementIp)
+	}
+	if it.AccountGroupToken.ValueString() != "plaintext-token" {
+		t.Errorf("limitation changed: expected rebuilt item with API token, got %v", it.AccountGroupToken)
+	}
+	if !it.AccountGroupTokenWoVersion.IsNull() {
+		t.Errorf("limitation changed: expected wo_version dropped, got %v", it.AccountGroupTokenWoVersion)
+	}
+}
+
+// cloud_provider_settings: umbrellaAuthSecretV2 / ciscoSSEAuthSecret are
+// write_only, so fromBody never reads them and leaves prior state untouched.
+func TestWriteOnlyCloudProviderSecretsNotReadBack(t *testing.T) {
+	d := &CloudProviderSettings{
+		UmbrellaAuthSecretV2: types.StringValue("my-umbrella"),
+		CiscoSseAuthSecret:   types.StringNull(),
+	}
+	d.fromBody(context.Background(), gjson.Parse(`{"data":[{"umbrellaAuthSecretV2":"$CRYPT_CLUSTER$x","ciscoSSEAuthSecret":"$CRYPT_CLUSTER$y","umbrellaOrgId":"org1"}]}`))
+	if d.UmbrellaAuthSecretV2.ValueString() != "my-umbrella" {
+		t.Errorf("umbrella secret overwritten: %v", d.UmbrellaAuthSecretV2)
+	}
+	if !d.CiscoSseAuthSecret.IsNull() {
+		t.Errorf("sse secret read back: %v", d.CiscoSseAuthSecret)
+	}
+	if d.UmbrellaOrgId.ValueString() != "org1" {
+		t.Errorf("sanity: org id not read: %v", d.UmbrellaOrgId)
+	}
 }

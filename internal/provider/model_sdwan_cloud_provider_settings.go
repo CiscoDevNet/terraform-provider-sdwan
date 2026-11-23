@@ -175,11 +175,6 @@ func (data *CloudProviderSettings) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.UmbrellaOrgId = types.StringNull()
 	}
-	if value := res.Get("data.0.umbrellaAuthSecretV2"); value.Exists() {
-		data.UmbrellaAuthSecretV2 = types.StringValue(value.String())
-	} else {
-		data.UmbrellaAuthSecretV2 = types.StringNull()
-	}
 	if value := res.Get("data.0.zscalerOrganization"); value.Exists() {
 		data.ZscalerOrganization = types.StringValue(value.String())
 	} else {
@@ -199,11 +194,6 @@ func (data *CloudProviderSettings) fromBody(ctx context.Context, res gjson.Resul
 		data.CiscoSseOrgId = types.StringValue(value.String())
 	} else {
 		data.CiscoSseOrgId = types.StringNull()
-	}
-	if value := res.Get("data.0.ciscoSSEAuthSecret"); value.Exists() {
-		data.CiscoSseAuthSecret = types.StringValue(value.String())
-	} else {
-		data.CiscoSseAuthSecret = types.StringNull()
 	}
 	if value := res.Get("data.0.ciscoSSEContextSharing"); value.Exists() {
 		if false && value.String() == "" {

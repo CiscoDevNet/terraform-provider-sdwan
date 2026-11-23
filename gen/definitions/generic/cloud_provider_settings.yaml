@@ -29,7 +29,7 @@ attributes:
     write_only_tf: true
     tf_name: umbrella_auth_secret_v2
     type: String
-    encrypted: true
+    write_only: true
     response_data_path: [data, "0"]
     description: Umbrella Authentication Secret (v2)
     example: $CRYPT_CLUSTER$a8nXr4uYaCN66qTQ1737+A==$gjmYVxnKMqvUEjo3BfIGbg==
@@ -126,7 +126,7 @@ attributes:
     write_only_tf: true
     tf_name: cisco_sse_auth_secret
     type: String
-    encrypted: true
+    write_only: true
     response_data_path: [data, "0"]
     description: Cisco SSE Authentication Secret
     example: $CRYPT_CLUSTER$Gg4nVpFdldXga1hLKhdJrA==$hiFPirWJnqNxMq3l/m1ekw==
