@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -104,6 +105,10 @@ func (r *ServiceObjectTrackerGroupProfileParcelResource) Schema(ctx context.Cont
 			"tracker_elements": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Group Tracks ID Refs").String,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(2),
+					listvalidator.SizeAtMost(2),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"object_tracker_id": schema.StringAttribute{

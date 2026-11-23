@@ -28,6 +28,8 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -194,6 +196,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("List of IP").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(14),
+							},
 						},
 						"list_of_ips_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -228,6 +234,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"prefixes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Prefix List").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"network_address": schema.StringAttribute{
@@ -310,6 +319,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"prefixes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Prefix List").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"prefix": schema.StringAttribute{
@@ -639,6 +651,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Addresses (Maximum: 4)").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
+								setvalidator.SizeAtMost(4),
+							},
 						},
 						"ipv4_addresses_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -742,6 +758,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Interface").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtMost(2),
+							},
 						},
 						"interface_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -785,6 +804,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Interface").String,
 							ElementType:         types.StringType,
 							Optional:            true,
+							Validators: []validator.Set{
+								setvalidator.SizeAtMost(2),
+							},
 						},
 						"interface_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -1108,6 +1130,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"redistributions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Redistribute Routes to specific Protocol on Service VPN").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(2),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"protocol": schema.StringAttribute{
@@ -1160,6 +1185,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"redistributions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Redistribute Routes to specific Protocol on Global VPN").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(2),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"protocol": schema.StringAttribute{
@@ -1223,6 +1251,9 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 						"redistributions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Redistribute Route to specific Protocol on Current Service VPN").String,
 							Optional:            true,
+							Validators: []validator.List{
+								listvalidator.SizeAtMost(2),
+							},
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"protocol": schema.StringAttribute{

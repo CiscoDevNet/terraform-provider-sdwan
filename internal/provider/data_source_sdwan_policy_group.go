@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -68,6 +67,10 @@ func (d *PolicyGroupDataSource) Schema(ctx context.Context, req datasource.Schem
 				Optional:            true,
 				Computed:            true,
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy group",
 				Optional:            true,
@@ -85,43 +88,6 @@ func (d *PolicyGroupDataSource) Schema(ctx context.Context, req datasource.Schem
 				MarkdownDescription: "List of feature profile IDs",
 				ElementType:         types.StringType,
 				Computed:            true,
-			},
-			"devices": schema.ListNestedAttribute{
-				MarkdownDescription: "List of devices",
-				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							MarkdownDescription: "Device ID",
-							Computed:            true,
-						},
-						"deploy": schema.BoolAttribute{
-							MarkdownDescription: "Deploy to device if enabled.",
-							Computed:            true,
-						},
-						"variables": schema.SetNestedAttribute{
-							MarkdownDescription: "List of variables",
-							Computed:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"name": schema.StringAttribute{
-										MarkdownDescription: "Variable name",
-										Computed:            true,
-									},
-									"value": schema.StringAttribute{
-										MarkdownDescription: "Variable value",
-										Computed:            true,
-									},
-									"list_value": schema.ListAttribute{
-										MarkdownDescription: "Use this instead of `value` in case value is of type `List`.",
-										ElementType:         types.StringType,
-										Computed:            true,
-									},
-								},
-							},
-						},
-					},
-				},
 			},
 			"policy_versions": schema.ListAttribute{
 				MarkdownDescription: "List of all associated policy versions",
@@ -196,35 +162,6 @@ func (d *PolicyGroupDataSource) Read(ctx context.Context, req datasource.ReadReq
 	}
 
 	config.fromBodyPolicyGroup(ctx, res)
-
-	// Read policy group devices
-	path := fmt.Sprintf("/v1/policy-group/%v/device/associate/", config.Id.ValueString())
-	res, err = d.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
-
-	config.fromBodyPolicyGroupDevices(ctx, res)
-
-	// Read policy group devices variables
-	// The Manager answers HTTP 500 (CFGRP0014/PLGRP0014) when variables are requested for a group with no devices
-	if len(res.Get("devices").Array()) > 0 {
-		path = fmt.Sprintf("/v1/policy-group/%v/device/variables/", config.Id.ValueString())
-		res, err = d.client.Get(path)
-		if strings.Contains(res.Get("error.message").String(), "Invalid policy group passed") {
-			resp.State.RemoveResource(ctx)
-			return
-		} else if err != nil {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-			return
-		}
-
-		config.fromBodyPolicyGroupDeviceVariables(ctx, res)
-	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
