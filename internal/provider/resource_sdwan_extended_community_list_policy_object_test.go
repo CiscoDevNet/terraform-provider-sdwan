@@ -30,7 +30,7 @@ import (
 func TestAccSdwanExtendedCommunityListPolicyObject(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_extended_community_list_policy_object.test", "name", "Example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_extended_community_list_policy_object.test", "entries.0.community", "community rt 100:10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_extended_community_list_policy_object.test", "entries.0.community", "rt 100:10"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -53,7 +53,7 @@ func testAccSdwanExtendedCommunityListPolicyObjectConfig_all() string {
 	config := `resource "sdwan_extended_community_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
-	config += `	  community = "community rt 100:10"` + "\n"
+	config += `	  community = "rt 100:10"` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

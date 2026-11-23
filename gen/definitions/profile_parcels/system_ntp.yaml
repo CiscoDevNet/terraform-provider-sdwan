@@ -30,7 +30,7 @@ attributes:
         tf_name: ntp_version
         example: 4
       - model_name: sourceInterface
-        example: Ethernet
+        example: GigabitEthernet1
       - model_name: prefer
         tf_name: prefer_this_ntp_server
         example: false
@@ -43,7 +43,7 @@ attributes:
       - model_name: md5Value
         sensitive: true
         write_only_tf: true
-        example: $CRYPT_CLUSTER
+        example: md5-key-example
         encrypted: true
       - model_name: hmacSha2Value
         sensitive: true
@@ -82,7 +82,7 @@ attributes:
   - model_name: source
     tf_name: source_interface
     data_path: [leader]
-    example: ATM
+    example: Loopback0
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {
