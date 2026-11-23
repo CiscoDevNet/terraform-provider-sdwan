@@ -34,15 +34,10 @@ func TestAccSdwanCloudProviderSettings(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_org_id", "123456"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_auth_key_v2", "aaaaaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_sig_auth_key", "bbbbbb"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "umbrella_dns_auth_key", "cccccc"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_organization", "z223456"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_partner_base_uri", "zscaler.net"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_partner_key", "secret012"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "zscaler_username", "user1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "cisco_sse_org_id", "323456"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "cisco_sse_auth_key", "33333444"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cloud_provider_settings.test", "cisco_sse_context_sharing", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },

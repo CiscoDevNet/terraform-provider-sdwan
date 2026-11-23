@@ -44,8 +44,10 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 - `packet_data_network_type_variable` (String) Variable name
 - `profile_id` (Number) Set Profile ID
 - `profile_id_variable` (String) Variable name
-- `profile_password` (String) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `profile_password` (String, Sensitive) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `profile_password_variable` (String) Variable name
+- `profile_password_wo` (String, Sensitive) Set the profile password [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `profile_password_wo_version` (Number) Rotation trigger for `profile_password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name
 - `requires_authentication` (Boolean) Require authentication type

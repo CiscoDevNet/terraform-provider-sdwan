@@ -30,7 +30,7 @@ data "sdwan_cisco_trustsec_feature_template" "example" {
 
 - `credentials_id` (String) Specify the TrustSec Network Access Device ID, should be same as mentioned in the Identity Services Engine (upto 32 char)
 - `credentials_id_variable` (String) Variable name
-- `credentials_password` (String) Set the password for the device
+- `credentials_password` (String, Sensitive) Set the password for the device
 - `credentials_password_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_sgt` (Number) Configure Local device security group <2..65519>
@@ -46,7 +46,7 @@ data "sdwan_cisco_trustsec_feature_template" "example" {
 - `speaker_hold_time` (Number) Configure Speaker hold-time in seconds <1..65534>
 - `speaker_hold_time_variable` (String) Variable name
 - `sxp_connections` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connections))
-- `sxp_default_password` (String) Configure SXP default password
+- `sxp_default_password` (String, Sensitive) Configure SXP default password
 - `sxp_default_password_variable` (String) Variable name
 - `sxp_key_chain` (String) Configure SXP key-chain
 - `sxp_key_chain_variable` (String) Variable name
@@ -77,7 +77,7 @@ Read-Only:
 - `mode_type` (String) Define Role of a device <speaker/listener/both>
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `peer_ip` (String) Configure SXP Peer IP address (IPv4)
-- `preshared_key` (String) Define Preshared Key type
+- `preshared_key` (String, Sensitive) Define Preshared Key type
 - `source_ip` (String) Configure SXP Source IP address (IPv4)
 - `source_ip_variable` (String) Variable name
 - `vpn_id` (Number) Configure Connection VPN (VRF) ID

@@ -164,18 +164,38 @@ func (d *ServiceWirelessLANProfileParcelDataSource) Schema(ctx context.Context, 
 						},
 						"radius_server_secret": schema.StringAttribute{
 							MarkdownDescription: "Set RADIUS server shared secret",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"radius_server_secret_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"radius_server_secret_wo": schema.StringAttribute{
+							MarkdownDescription: "Set RADIUS server shared secret",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"radius_server_secret_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `radius_server_secret_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
+							Computed:            true,
+						},
 						"passphrase": schema.StringAttribute{
 							MarkdownDescription: "Set passphrase",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"passphrase_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"passphrase_wo": schema.StringAttribute{
+							MarkdownDescription: "Set passphrase",
+							Sensitive:           true,
+							Computed:            true,
+						},
+						"passphrase_wo_version": schema.Int64Attribute{
+							MarkdownDescription: "Rotation trigger for `passphrase_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 							Computed:            true,
 						},
 						"qos_profile": schema.StringAttribute{
@@ -207,10 +227,20 @@ func (d *ServiceWirelessLANProfileParcelDataSource) Schema(ctx context.Context, 
 			},
 			"password": schema.StringAttribute{
 				MarkdownDescription: "Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"password_wo": schema.StringAttribute{
+				MarkdownDescription: "Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.",
+				Sensitive:           true,
+				Computed:            true,
+			},
+			"password_wo_version": schema.Int64Attribute{
+				MarkdownDescription: "Rotation trigger for `password_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.",
 				Computed:            true,
 			},
 			"me_dynamic_ip_enabled": schema.BoolAttribute{

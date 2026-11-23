@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -119,6 +120,8 @@ type ServiceRoutingOSPFv3IPv4AreasInterfaces struct {
 	AuthenticationSpiVariable     types.String `tfsdk:"authentication_spi_variable"`
 	AuthenticationKey             types.String `tfsdk:"authentication_key"`
 	AuthenticationKeyVariable     types.String `tfsdk:"authentication_key_variable"`
+	AuthenticationKeyWo           types.String `tfsdk:"authentication_key_wo"`
+	AuthenticationKeyWoVersion    types.Int64  `tfsdk:"authentication_key_wo_version"`
 }
 type ServiceRoutingOSPFv3IPv4AreasRanges struct {
 	IpAddress           types.String `tfsdk:"ip_address"`
@@ -671,6 +674,12 @@ func (data ServiceRoutingOSPFv3IPv4) toBody(ctx context.Context, ver *version.Ve
 							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.value", childItem.AuthenticationKey.ValueString())
 						}
 					}
+					if !childItem.AuthenticationKeyWo.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "authenticationConfig.authKey.value", childItem.AuthenticationKeyWo.ValueString())
+						}
+					}
 					itemBody, _ = sjson.SetRaw(itemBody, "interfaces.-1", itemChildBody)
 				}
 			}
@@ -1157,7 +1166,10 @@ func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Re
 						if t.String() == "variable" {
 							cItem.AuthenticationKeyVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.AuthenticationKey = types.StringValue(va.String())
+							// Masked secrets returned by the Manager must never be written into state.
+							if fullRead || !helpers.IsEncryptedValue(va.String()) {
+								cItem.AuthenticationKey = types.StringValue(va.String())
+							}
 						}
 					}
 					item.Interfaces = append(item.Interfaces, cItem)
@@ -1258,6 +1270,10 @@ func (data *ServiceRoutingOSPFv3IPv4) fromBody(ctx context.Context, res gjson.Re
 								}
 								if keyMatchC {
 									matchedC[nci] = true
+									data.Areas[ni].Interfaces[nci].AuthenticationKey = oldCItem.AuthenticationKey
+									data.Areas[ni].Interfaces[nci].AuthenticationKeyVariable = oldCItem.AuthenticationKeyVariable
+
+									data.Areas[ni].Interfaces[nci].AuthenticationKeyWoVersion = oldCItem.AuthenticationKeyWoVersion
 									resultC = append(resultC, data.Areas[ni].Interfaces[nci])
 									break
 								}

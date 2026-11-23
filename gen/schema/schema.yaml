@@ -55,6 +55,15 @@ attribute:
   optional: bool(required=False) # Set to true if the attribute is optional
   write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
   encrypted: bool(required=False) # Set to true if the attribute is written(toBody in model) and read(fromBody in model) initially, but on a non-import refresh read its masked API value is not applied - the prior-state value is restored from oldItem instead (for secrets that return masked values; nested-list fields only)
+  # Secret-handling flags - these three are ORTHOGONAL, read carefully before using:
+  #   write_only  -> READ behaviour: the API never returns this value, so it is skipped in fromBody. Value is still kept in plan and state.
+  #   encrypted   -> REFRESH behaviour: the API returns a masked value, so on a non-import refresh the prior-state value is restored instead.
+  #   sensitive   -> DISPLAY behaviour: emits "Sensitive: true" on the Terraform schema attribute so the value is redacted in plan/apply output
+  #                  and CI logs, and excludes the attribute from generated example and acceptance-test configuration.
+  #                  This is the flag that marks "this attribute holds a credential". It does NOT remove the value from Terraform state.
+  #                  Note: a paired "<attr>_variable" attribute carries a variable NAME, not a secret, and is never marked sensitive.
+  sensitive: bool(required=False) # Set to true if the attribute holds a credential (password, passphrase, pre-shared key, community string, API secret, token)
+  write_only_tf: bool(required=False) # Requires `sensitive` to be set as well. Expands the attribute into three coexisting attributes: the original (kept, still stored in state), "<attr>_wo" (Terraform write-only, never stored in plan or state) and "<attr>_wo_version" (Int64, the rotation trigger). The original and "<attr>_wo" are mutually exclusive, as are "<attr>_variable" and "<attr>_wo". Only the "_wo" form requires Terraform >= 1.11; existing configurations keep working unchanged. String attributes only; not permitted anywhere under a Set.
   tf_only: bool(required=False) # Set to true if this attribute is only used in Terraform but not added to payload
   exclude_test: bool(required=False) # Exclude attribute from example (documentation) and acceptance test
   exclude_example: bool(required=False) # Exclude attribute from example (documentation)

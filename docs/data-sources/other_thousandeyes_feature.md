@@ -42,8 +42,10 @@ data "sdwan_other_thousandeyes_feature" "example" {
 
 Read-Only:
 
-- `account_group_token` (String) Set the Account Group Token
+- `account_group_token` (String, Sensitive) Set the Account Group Token
 - `account_group_token_variable` (String) Variable name
+- `account_group_token_wo` (String, Sensitive) Set the Account Group Token
+- `account_group_token_wo_version` (Number) Rotation trigger for `account_group_token_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `agent_default_gateway` (String) Set the Agent default gateway
 - `agent_default_gateway_variable` (String) Variable name
 - `hostname` (String) Set the host name

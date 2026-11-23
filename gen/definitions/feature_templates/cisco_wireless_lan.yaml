@@ -29,8 +29,10 @@ attributes:
     - model_name: radius-server-port
       example: 1812
     - model_name: radius-server-secret
+      sensitive: true
       example: MySecret1
     - model_name: passphrase
+      sensitive: true
       example: passphrase
     - model_name: qos-profile
       example: silver
@@ -39,6 +41,7 @@ attributes:
   - model_name: username
     example: user1
   - model_name: password
+    sensitive: true
     example:  myPassword01
   - model_name: address
     tf_name: controller_ip_address

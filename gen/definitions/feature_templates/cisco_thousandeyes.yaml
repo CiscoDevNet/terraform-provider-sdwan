@@ -10,6 +10,7 @@ attributes:
       - model_name: application-type
         example: te
       - model_name: token
+        sensitive: true
         tf_name: te_account_group_token
         example: 1234567
       - model_name: vpn

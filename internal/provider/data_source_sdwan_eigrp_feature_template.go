@@ -203,6 +203,7 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 			},
 			"hmac_authentication_key": schema.StringAttribute{
 				MarkdownDescription: "Set hmac-sha-256 authentication key",
+				Sensitive:           true,
 				Computed:            true,
 			},
 			"hmac_authentication_key_variable": schema.StringAttribute{
@@ -224,6 +225,7 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 						},
 						"md5_authentication_key": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 key",
+							Sensitive:           true,
 							Computed:            true,
 						},
 						"md5_authentication_key_variable": schema.StringAttribute{

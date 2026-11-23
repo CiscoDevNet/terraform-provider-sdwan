@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -49,12 +50,16 @@ type SystemRemoteAccess struct {
 	PskAuthenticationTypeVariable            types.String `tfsdk:"psk_authentication_type_variable"`
 	PskAuthenticationPreSharedKey            types.String `tfsdk:"psk_authentication_pre_shared_key"`
 	PskAuthenticationPreSharedKeyVariable    types.String `tfsdk:"psk_authentication_pre_shared_key_variable"`
+	PskAuthenticationPreSharedKeyWo          types.String `tfsdk:"psk_authentication_pre_shared_key_wo"`
+	PskAuthenticationPreSharedKeyWoVersion   types.Int64  `tfsdk:"psk_authentication_pre_shared_key_wo_version"`
 	RadiusGroupName                          types.String `tfsdk:"radius_group_name"`
 	RadiusGroupNameVariable                  types.String `tfsdk:"radius_group_name_variable"`
 	AaaSpecifyNamePolicyName                 types.String `tfsdk:"aaa_specify_name_policy_name"`
 	AaaSpecifyNamePolicyNameVariable         types.String `tfsdk:"aaa_specify_name_policy_name_variable"`
 	AaaSpecifyNamePolicyPassword             types.String `tfsdk:"aaa_specify_name_policy_password"`
 	AaaSpecifyNamePolicyPasswordVariable     types.String `tfsdk:"aaa_specify_name_policy_password_variable"`
+	AaaSpecifyNamePolicyPasswordWo           types.String `tfsdk:"aaa_specify_name_policy_password_wo"`
+	AaaSpecifyNamePolicyPasswordWoVersion    types.Int64  `tfsdk:"aaa_specify_name_policy_password_wo_version"`
 	AaaDeriveNameFromPeerIdentity            types.String `tfsdk:"aaa_derive_name_from_peer_identity"`
 	AaaDeriveNameFromPeerIdentityVariable    types.String `tfsdk:"aaa_derive_name_from_peer_identity_variable"`
 	AaaDeriveNameFromPeerDomain              types.String `tfsdk:"aaa_derive_name_from_peer_domain"`
@@ -198,6 +203,12 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.value", data.PskAuthenticationPreSharedKey.ValueString())
 		}
 	}
+	if !data.PskAuthenticationPreSharedKeyWo.IsNull() {
+		if true && data.PskAuthenticationType.ValueString() == "group" {
+			body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.optionType", "global")
+			body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.value", data.PskAuthenticationPreSharedKeyWo.ValueString())
+		}
+	}
 
 	if !data.RadiusGroupNameVariable.IsNull() {
 		if true {
@@ -232,6 +243,12 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 		if true {
 			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.optionType", "global")
 			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.value", data.AaaSpecifyNamePolicyPassword.ValueString())
+		}
+	}
+	if !data.AaaSpecifyNamePolicyPasswordWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.optionType", "global")
+			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.value", data.AaaSpecifyNamePolicyPasswordWo.ValueString())
 		}
 	}
 
@@ -481,14 +498,20 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result, 
 			data.PskAuthenticationType = types.StringValue(va.String())
 		}
 	}
-	data.PskAuthenticationPreSharedKey = types.StringNull()
-	data.PskAuthenticationPreSharedKeyVariable = types.StringNull()
-	if t := res.Get(path + "pskAuth.preSharedKey.optionType"); t.Exists() {
-		va := res.Get(path + "pskAuth.preSharedKey.value")
-		if t.String() == "variable" {
-			data.PskAuthenticationPreSharedKeyVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PskAuthenticationPreSharedKey = types.StringValue(va.String())
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.PskAuthenticationPreSharedKey = types.StringNull()
+		data.PskAuthenticationPreSharedKeyVariable = types.StringNull()
+		if t := res.Get(path + "pskAuth.preSharedKey.optionType"); t.Exists() {
+			va := res.Get(path + "pskAuth.preSharedKey.value")
+			if t.String() == "variable" {
+				data.PskAuthenticationPreSharedKeyVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				// Masked secrets returned by the Manager must never be written into state.
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
+					data.PskAuthenticationPreSharedKey = types.StringValue(va.String())
+				}
+			}
 		}
 	}
 	data.RadiusGroupName = types.StringNull()
@@ -511,14 +534,20 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result, 
 			data.AaaSpecifyNamePolicyName = types.StringValue(va.String())
 		}
 	}
-	data.AaaSpecifyNamePolicyPassword = types.StringNull()
-	data.AaaSpecifyNamePolicyPasswordVariable = types.StringNull()
-	if t := res.Get(path + "aaaPolicy.specifyName.password.optionType"); t.Exists() {
-		va := res.Get(path + "aaaPolicy.specifyName.password.value")
-		if t.String() == "variable" {
-			data.AaaSpecifyNamePolicyPasswordVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.AaaSpecifyNamePolicyPassword = types.StringValue(va.String())
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.AaaSpecifyNamePolicyPassword = types.StringNull()
+		data.AaaSpecifyNamePolicyPasswordVariable = types.StringNull()
+		if t := res.Get(path + "aaaPolicy.specifyName.password.optionType"); t.Exists() {
+			va := res.Get(path + "aaaPolicy.specifyName.password.value")
+			if t.String() == "variable" {
+				data.AaaSpecifyNamePolicyPasswordVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				// Masked secrets returned by the Manager must never be written into state.
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
+					data.AaaSpecifyNamePolicyPassword = types.StringValue(va.String())
+				}
+			}
 		}
 	}
 	data.AaaDeriveNameFromPeerIdentity = types.StringNull()

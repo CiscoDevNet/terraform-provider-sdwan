@@ -234,6 +234,7 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 			},
 			"hmac_authentication_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key").String,
+				Sensitive:           true,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 31),
@@ -261,6 +262,7 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 						},
 						"md5_authentication_key": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 key").String,
+							Sensitive:           true,
 							Optional:            true,
 						},
 						"md5_authentication_key_variable": schema.StringAttribute{

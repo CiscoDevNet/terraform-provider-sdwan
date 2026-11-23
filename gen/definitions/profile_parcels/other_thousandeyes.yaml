@@ -18,14 +18,17 @@ attributes:
   - model_name: virtualApplication
     attributes: 
     - model_name: token
+      sensitive: true
+      write_only_tf: true
       tf_name: account_group_token
-      id: true
+      encrypted: true
       mandatory: true
       example: qwerqwerqwerqwerqwerqwerqwerqwer
     - model_name: vpn
       example: 1
     - model_name: teMgmtIp
       tf_name: management_ip
+      id: true
       example: 10.0.0.2
     - model_name: teMgmtSubnetMask
       tf_name: management_subnet_mask

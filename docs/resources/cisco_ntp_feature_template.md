@@ -82,7 +82,7 @@ Optional:
   - Range: `1`-`65535`
 - `id_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `value` (String) Enter cleartext or AES-encrypted MD5 authentication key
+- `value` (String, Sensitive) Enter cleartext or AES-encrypted MD5 authentication key
 - `value_variable` (String) Variable name
 
 

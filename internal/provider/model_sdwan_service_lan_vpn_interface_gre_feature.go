@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -97,6 +98,8 @@ type ServiceLANVPNInterfaceGRE struct {
 	IkeGroupVariable                      types.String `tfsdk:"ike_group_variable"`
 	PreSharedSecret                       types.String `tfsdk:"pre_shared_secret"`
 	PreSharedSecretVariable               types.String `tfsdk:"pre_shared_secret_variable"`
+	PreSharedSecretWo                     types.String `tfsdk:"pre_shared_secret_wo"`
+	PreSharedSecretWoVersion              types.Int64  `tfsdk:"pre_shared_secret_wo_version"`
 	IkeLocalId                            types.String `tfsdk:"ike_local_id"`
 	IkeLocalIdVariable                    types.String `tfsdk:"ike_local_id_variable"`
 	IkeRemoteId                           types.String `tfsdk:"ike_remote_id"`
@@ -589,6 +592,12 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"basic.preSharedSecret.value", data.PreSharedSecret.ValueString())
 		}
 	}
+	if !data.PreSharedSecretWo.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"basic.preSharedSecret.optionType", "global")
+			body, _ = sjson.Set(body, path+"basic.preSharedSecret.value", data.PreSharedSecretWo.ValueString())
+		}
+	}
 
 	if !data.IkeLocalIdVariable.IsNull() {
 		if true {
@@ -1011,14 +1020,20 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 			data.IkeGroup = types.StringValue(va.String())
 		}
 	}
-	data.PreSharedSecret = types.StringNull()
-	data.PreSharedSecretVariable = types.StringNull()
-	if t := res.Get(path + "basic.preSharedSecret.optionType"); t.Exists() {
-		va := res.Get(path + "basic.preSharedSecret.value")
-		if t.String() == "variable" {
-			data.PreSharedSecretVariable = types.StringValue(va.String())
-		} else if t.String() == "global" {
-			data.PreSharedSecret = types.StringValue(va.String())
+	// Encrypted top-level attribute: read only on full read (import); on refresh the prior state value is preserved.
+	if fullRead {
+		data.PreSharedSecret = types.StringNull()
+		data.PreSharedSecretVariable = types.StringNull()
+		if t := res.Get(path + "basic.preSharedSecret.optionType"); t.Exists() {
+			va := res.Get(path + "basic.preSharedSecret.value")
+			if t.String() == "variable" {
+				data.PreSharedSecretVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				// Masked secrets returned by the Manager must never be written into state.
+				if fullRead || !helpers.IsEncryptedValue(va.String()) {
+					data.PreSharedSecret = types.StringValue(va.String())
+				}
+			}
 		}
 	}
 	data.IkeLocalId = types.StringNull()

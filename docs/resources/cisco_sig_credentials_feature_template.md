@@ -45,9 +45,9 @@ resource "sdwan_cisco_sig_credentials_feature_template" "example" {
 
 ### Optional
 
-- `umbrella_api_key` (String) API Key
+- `umbrella_api_key` (String, Sensitive) API Key
 - `umbrella_api_key_variable` (String) Variable name
-- `umbrella_api_secret` (String) API Secret
+- `umbrella_api_secret` (String, Sensitive) API Secret
 - `umbrella_api_secret_variable` (String) Variable name
 - `umbrella_organization_id` (String) Ord ID
 - `umbrella_organization_id_variable` (String) Variable name
@@ -56,15 +56,15 @@ resource "sdwan_cisco_sig_credentials_feature_template" "example" {
 - `zscaler_cloud_name_variable` (String) Variable name
 - `zscaler_organization` (String) Organization Name
 - `zscaler_organization_variable` (String) Variable name
-- `zscaler_partner_api_key` (String) Partner API Key
+- `zscaler_partner_api_key` (String, Sensitive) Partner API Key
 - `zscaler_partner_api_key_variable` (String) Variable name
 - `zscaler_partner_base_uri` (String) Partner Base URI to be used in REST calls
 - `zscaler_partner_base_uri_variable` (String) Variable name
-- `zscaler_partner_password` (String) Partner Password
+- `zscaler_partner_password` (String, Sensitive) Partner Password
 - `zscaler_partner_password_variable` (String) Variable name
 - `zscaler_partner_username` (String) Partner User Name
 - `zscaler_partner_username_variable` (String) Variable name
-- `zscaler_password` (String) Password of Zscaler partner account
+- `zscaler_password` (String, Sensitive) Password of Zscaler partner account
 - `zscaler_password_variable` (String) Variable name
 - `zscaler_username` (String) Username of Zscaler partner account
 - `zscaler_username_variable` (String) Variable name

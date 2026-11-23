@@ -101,7 +101,8 @@ func (r *OtherThousandEyesProfileParcelResource) Schema(ctx context.Context, req
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"account_group_token": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").AddNote("Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.").AddNote("This attribute stores the secret in Terraform state. Prefer `account_group_token_wo` together with `account_group_token_wo_version`, which keeps it out of state.").String,
+							Sensitive:           true,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 210),
@@ -109,6 +110,19 @@ func (r *OtherThousandEyesProfileParcelResource) Schema(ctx context.Context, req
 						},
 						"account_group_token_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"account_group_token_wo": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set the Account Group Token").AddNote("Only one of `account_group_token`, `account_group_token_variable` and `account_group_token_wo` can be set.").String,
+							Sensitive:           true,
+							WriteOnly:           true,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 210),
+							},
+						},
+						"account_group_token_wo_version": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Rotation trigger for `account_group_token_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.").String,
 							Optional:            true,
 						},
 						"vpn": schema.Int64Attribute{
@@ -227,6 +241,66 @@ func (r *OtherThousandEyesProfileParcelResource) Configure(_ context.Context, re
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+var _ resource.ResourceWithValidateConfig = &OtherThousandEyesProfileParcelResource{}
+
+// ValidateConfig enforces the rules between a secret attribute, its "_variable"
+// sibling and its write-only twin.
+//
+// All diagnostics here are resource-scoped (AddError/AddWarning, never
+// AddAttributeError) and the schema deliberately carries no
+// ConflictsWith/ExactlyOneOf/AlsoRequires validators. Terraform renders an
+// attribute-scoped diagnostic together with the offending raw configuration line,
+// which would print the secret into plan output and CI logs. Sensitive: true does
+// not suppress that.
+func (r *OtherThousandEyesProfileParcelResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+
+	{
+		// Secrets nested in "virtual_application" are validated per element. A list that cannot be
+		// read as a whole - because it is still unknown at validate time - is skipped rather
+		// than reported, since there is nothing to check yet.
+		var cfgVirtualApplication []OtherThousandEyesVirtualApplication
+		if diags := req.Config.GetAttribute(ctx, path.Root("virtual_application"), &cfgVirtualApplication); !diags.HasError() {
+			for i := range cfgVirtualApplication {
+				el := cfgVirtualApplication[i]
+
+				// An unknown value is one that is not resolved yet at validate time, for example an
+				// ephemeral resource attribute or a random_password reference. Treat it as "not
+				// decided" rather than "set", otherwise every such configuration trips a false error.
+				if !el.AccountGroupToken.IsUnknown() && !el.AccountGroupTokenWo.IsUnknown() && !el.AccountGroupToken.IsNull() && !el.AccountGroupTokenWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("Only one of `account_group_token` and `account_group_token_wo` can be set in `virtual_application` element %d.", i),
+					)
+				}
+				if !el.AccountGroupTokenVariable.IsUnknown() && !el.AccountGroupTokenWo.IsUnknown() && !el.AccountGroupTokenVariable.IsNull() && !el.AccountGroupTokenWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Invalid Attribute Combination",
+						fmt.Sprintf("`account_group_token_variable` and `account_group_token_wo` cannot both be set in `virtual_application` element %d. `account_group_token_variable` defers the value to a device variable, so the write-only value would never be sent.", i),
+					)
+				}
+				if !el.AccountGroupToken.IsUnknown() && !el.AccountGroupTokenVariable.IsUnknown() && !el.AccountGroupToken.IsNull() && !el.AccountGroupTokenVariable.IsNull() {
+					resp.Diagnostics.AddWarning(
+						"Conflicting Attribute Combination",
+						fmt.Sprintf("Both `account_group_token` and `account_group_token_variable` are set in `virtual_application` element %d. `account_group_token_variable` takes precedence, so the value of `account_group_token` is not sent to the device - but it is still stored in Terraform state. Set only one of them.", i),
+					)
+				}
+				if !el.AccountGroupTokenWo.IsUnknown() && !el.AccountGroupTokenWoVersion.IsUnknown() && !el.AccountGroupTokenWo.IsNull() && el.AccountGroupTokenWoVersion.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`account_group_token_wo_version` must be set when `account_group_token_wo` is used in `virtual_application` element %d. The write-only value is not stored in state, so Terraform can only detect a change to it through the version.", i),
+					)
+				}
+				if !el.AccountGroupTokenWoVersion.IsUnknown() && !el.AccountGroupTokenWo.IsUnknown() && !el.AccountGroupTokenWoVersion.IsNull() && el.AccountGroupTokenWo.IsNull() {
+					resp.Diagnostics.AddError(
+						"Missing Required Attribute",
+						fmt.Sprintf("`account_group_token_wo` must be set when `account_group_token_wo_version` is used in `virtual_application` element %d.", i),
+					)
+				}
+			}
+		}
+	}
+}
+
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
@@ -238,6 +312,23 @@ func (r *OtherThousandEyesProfileParcelResource) Create(ctx context.Context, req
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	// Write-only values in list "virtual_application" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgVirtualApplication []OtherThousandEyesVirtualApplication
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("virtual_application"), &cfgVirtualApplication)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.VirtualApplication {
+			if i < len(cfgVirtualApplication) {
+				plan.VirtualApplication[i].AccountGroupTokenWo = cfgVirtualApplication[i].AccountGroupTokenWo
+			}
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Create", plan.Name.ValueString()))
@@ -317,6 +408,23 @@ func (r *OtherThousandEyesProfileParcelResource) Update(ctx context.Context, req
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// Write-only values in list "virtual_application" are not stored in plan or state; read the
+	// parent list from the configuration and copy them into the plan element by element.
+	// The positional join is sound because the parent is an ordered List - write_only_tf
+	// is rejected at generate time anywhere under a Set.
+	{
+		var cfgVirtualApplication []OtherThousandEyesVirtualApplication
+		resp.Diagnostics.Append(req.Config.GetAttribute(ctx, path.Root("virtual_application"), &cfgVirtualApplication)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+		for i := range plan.VirtualApplication {
+			if i < len(cfgVirtualApplication) {
+				plan.VirtualApplication[i].AccountGroupTokenWo = cfgVirtualApplication[i].AccountGroupTokenWo
+			}
+		}
+	}
 	// Read state
 	diags = req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
@@ -327,6 +435,23 @@ func (r *OtherThousandEyesProfileParcelResource) Update(ctx context.Context, req
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
 	body := plan.toBody(ctx)
+
+	// Opting a secret into its write-only twin moves the same value from "x" to
+	// "x_wo". Both spellings serialise to the same payload path, so the body built
+	// from the plan equals the body built from state and there is nothing to send.
+	// PUTting anyway would bump the parcel version, which in Network as Code bumps
+	// the configuration group and redeploys every device attached to it - for a
+	// payload the Manager already has.
+	//
+	// Only this migration case can produce equal bodies. Rotating the secret, or
+	// changing any other attribute, yields a different body and still PUTs.
+	if helpers.JSONEqual(body, state.toBody(ctx)) {
+		plan.Version = state.Version
+		tflog.Debug(ctx, fmt.Sprintf("%s: Update is a no-op, skipping PUT to avoid a version bump", plan.Name.ValueString()))
+		diags = resp.State.Set(ctx, &plan)
+		resp.Diagnostics.Append(diags...)
+		return
+	}
 	res, err := r.client.Put(plan.getPath()+"/"+url.QueryEscape(plan.Id.ValueString()), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))

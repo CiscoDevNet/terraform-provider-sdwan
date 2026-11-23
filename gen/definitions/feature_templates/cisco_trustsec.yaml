@@ -7,6 +7,7 @@ attributes:
   - model_name: credentials-id
     example: user1
   - model_name: credentials-password
+    sensitive: true
     example: MyPassword
   - model_name: enable-enforcement
     example: true
@@ -15,6 +16,7 @@ attributes:
   - model_name: sxp-source-ip
     example: 1.2.3.4
   - model_name: sxp-default-password
+    sensitive: true
     example: MyPassword
   - model_name: sxp-key-chain
     example: keychain1
@@ -46,6 +48,7 @@ attributes:
       tf_name: source_ip
       example: 2.3.4.5
     - model_name: connection-preshared-key
+      sensitive: true
       tf_name: preshared_key
       example: default
     - model_name: connection-mode

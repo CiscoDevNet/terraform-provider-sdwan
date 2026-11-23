@@ -37,7 +37,6 @@ func TestAccSdwanCellularProfileFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_name", "PROFILE1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "packet_data_network_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_username", "MyUsername"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_password", "MyPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "primary_dns_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "secondary_dns_address", "1.2.3.5"))
 	resource.Test(t, resource.TestCase{

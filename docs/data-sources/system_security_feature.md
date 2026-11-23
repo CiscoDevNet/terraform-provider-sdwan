@@ -76,8 +76,10 @@ Read-Only:
 - `id` (Number) Select the Key ID
 - `include_tcp_options` (Boolean) Configure Include TCP Options
 - `include_tcp_options_variable` (String) Variable name
-- `key_string` (String) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key_string` (String, Sensitive) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
 - `key_string_variable` (String) Variable name
+- `key_string_wo` (String, Sensitive) Specify the Key String [Note: Catalyst SD-WAN Manager will encrypt this field before saving. Cleartext strings will not be returned back to the user in GET responses for sensitive fields.]
+- `key_string_wo_version` (Number) Rotation trigger for `key_string_wo`. Increment this integer whenever the write-only value changes so that Terraform sends the new secret. The value is stored in state; the secret is not.
 - `name` (String) Select the chain name
 - `receiver_id` (Number) Specify the Receiver ID
 - `receiver_id_variable` (String) Variable name
