@@ -110,6 +110,7 @@ func testAccSdwanCiscoVPNInterfaceIPSecFeatureTemplateConfig_all() string {
 	config += `	ike_rekey_interval = 20000` + "\n"
 	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
 	config += `	ike_group = "20"` + "\n"
+	config += `	ike_pre_shared_key = "cisco123"` + "\n"
 	config += `	ike_pre_shared_key_local_id = "1"` + "\n"
 	config += `	ike_pre_shared_key_remote_id = "2"` + "\n"
 	config += `	ipsec_rekey_interval = 7200` + "\n"

@@ -96,6 +96,7 @@ func testAccSdwanEigrpFeatureTemplateConfig_all() string {
 	config += `	route_policy_name = "RP1"` + "\n"
 	config += `	filter = false` + "\n"
 	config += `	authentication_type = "hmac-sha-256"` + "\n"
+	config += `	hmac_authentication_key = "myAuthKey"` + "\n"
 	config += `	interfaces = [{` + "\n"
 	config += `	  interface_name = "Ethernet1"` + "\n"
 	config += `	  shutdown = false` + "\n"

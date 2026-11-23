@@ -133,6 +133,7 @@ func testAccDataSourceSdwanCiscoSecureInternetGatewayFeatureTemplateConfig() str
 	config += `	  dead_peer_detection_interval = 30` + "\n"
 	config += `	  dead_peer_detection_retries = 5` + "\n"
 	config += `	  ike_version = 1` + "\n"
+	config += `	  ike_pre_shared_key = "A1234567"` + "\n"
 	config += `	  ike_rekey_interval = 600` + "\n"
 	config += `	  ike_ciphersuite = "aes256-cbc-sha2"` + "\n"
 	config += `	  ike_group = "14"` + "\n"

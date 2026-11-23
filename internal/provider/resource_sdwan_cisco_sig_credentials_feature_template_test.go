@@ -76,8 +76,13 @@ func testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_all() string {
 	config += `	zscaler_organization = "org1"` + "\n"
 	config += `	zscaler_partner_base_uri = "abc"` + "\n"
 	config += `	zscaler_username = "user1"` + "\n"
+	config += `	zscaler_password = "password123"` + "\n"
 	config += `	zscaler_cloud_name = 1` + "\n"
 	config += `	zscaler_partner_username = "partner1"` + "\n"
+	config += `	zscaler_partner_password = "password123"` + "\n"
+	config += `	zscaler_partner_api_key = "key123"` + "\n"
+	config += `	umbrella_api_key = "key123"` + "\n"
+	config += `	umbrella_api_secret = "secret123"` + "\n"
 	config += `	umbrella_organization_id = "org1"` + "\n"
 	config += `}` + "\n"
 	return config

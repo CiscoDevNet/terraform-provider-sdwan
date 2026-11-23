@@ -146,28 +146,28 @@ func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
-	{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+	{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	config += `	{{.TfName}} = [{` + "\n"
 		{{- range  .Attributes}}
-		{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+		{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 		{{- if isNestedListSet .}}
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 	config += `	  {{.TfName}} = [{` + "\n"
 			{{- range  .Attributes}}
-			{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+			{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 			{{- if isNestedListSet .}}
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			{{- end}}
 	config += `      {{.TfName}} = [{` + "\n"
 				{{- range  .Attributes}}
-				{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+				{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
@@ -269,28 +269,28 @@ func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelByNameConfig() string
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
-	{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+	{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	config += `	{{.TfName}} = [{` + "\n"
 		{{- range  .Attributes}}
-		{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+		{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 		{{- if isNestedListSet .}}
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 	config += `	  {{.TfName}} = [{` + "\n"
 			{{- range  .Attributes}}
-			{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+			{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 			{{- if isNestedListSet .}}
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			{{- end}}
 	config += `      {{.TfName}} = [{` + "\n"
 				{{- range  .Attributes}}
-				{{- if and (not .ExcludeTest) (not .Sensitive) (not .DynamicDefault) (not .Value)}}
+				{{- if and (not .ExcludeTest) (not .DynamicDefault) (not .Value)}}
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"

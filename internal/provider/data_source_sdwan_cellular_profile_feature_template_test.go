@@ -67,6 +67,7 @@ func testAccDataSourceSdwanCellularProfileFeatureTemplateConfig() string {
 	config += `	profile_name = "PROFILE1"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	profile_username = "MyUsername"` + "\n"
+	config += `	profile_password = "MyPassword"` + "\n"
 	config += `	primary_dns_address = "1.2.3.4"` + "\n"
 	config += `	secondary_dns_address = "1.2.3.5"` + "\n"
 	config += `}` + "\n"

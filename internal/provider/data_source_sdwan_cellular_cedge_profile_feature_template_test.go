@@ -60,6 +60,7 @@ func testAccDataSourceSdwanCellularCEdgeProfileFeatureTemplateConfig() string {
 	config += `	authentication_type = "chap"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	profile_username = "MyUsername"` + "\n"
+	config += `	profile_password = "MyPassword"` + "\n"
 	config += `	no_overwrite = false` + "\n"
 	config += `}` + "\n"
 

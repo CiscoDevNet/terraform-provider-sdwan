@@ -130,6 +130,7 @@ func testAccDataSourceSdwanCiscoOSPFFeatureTemplateConfig() string {
 	config += `		passive_interface = true` + "\n"
 	config += `		authentication_type = "message-digest"` + "\n"
 	config += `		authentication_message_digest_key_id = 1` + "\n"
+	config += `		authentication_message_digest_key = "cisco123"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  ranges = [{` + "\n"
 	config += `		address = "1.1.1.0/24"` + "\n"

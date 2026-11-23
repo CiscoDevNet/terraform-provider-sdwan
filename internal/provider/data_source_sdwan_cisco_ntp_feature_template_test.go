@@ -65,6 +65,7 @@ func testAccDataSourceSdwanCiscoNTPFeatureTemplateConfig() string {
 	config += `	trusted_keys = [1]` + "\n"
 	config += `	authentication_keys = [{` + "\n"
 	config += `	  id = 1` + "\n"
+	config += `	  value = "12345"` + "\n"
 	config += `	}]` + "\n"
 	config += `	servers = [{` + "\n"
 	config += `	  hostname_ip = "NTP_SERVER1"` + "\n"

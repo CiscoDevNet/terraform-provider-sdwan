@@ -62,6 +62,7 @@ func testAccDataSourceSdwanCiscoThousandEyesFeatureTemplateConfig() string {
 	config += `	virtual_applications = [{` + "\n"
 	config += `	  instance_id = "1"` + "\n"
 	config += `	  application_type = "te"` + "\n"
+	config += `	  te_account_group_token = "1234567"` + "\n"
 	config += `	  te_vpn = 1` + "\n"
 	config += `	  te_agent_ip = "1.1.1.2/24"` + "\n"
 	config += `	  te_default_gateway = "1.1.1.255"` + "\n"

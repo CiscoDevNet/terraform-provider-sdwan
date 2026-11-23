@@ -90,6 +90,7 @@ func testAccDataSourceSdwanCiscoSecurityFeatureTemplateConfig() string {
 	config += `	  send_id = 0` + "\n"
 	config += `	  receive_id = 0` + "\n"
 	config += `	  crypto_algorithm = "hmac-sha-256"` + "\n"
+	config += `	  key_string = "abc123"` + "\n"
 	config += `	  send_lifetime_local = true` + "\n"
 	config += `	  send_lifetime_start_time = "2022-12-31T23:59"` + "\n"
 	config += `	  send_lifetime_end_time_format = "infinite"` + "\n"

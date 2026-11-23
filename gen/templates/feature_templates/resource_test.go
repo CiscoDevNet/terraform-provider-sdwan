@@ -140,7 +140,7 @@ func testAccSdwan{{camelCase .Name}}FeatureTemplateConfig_minimum() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += ` device_types = ["vedge-C8000V"]` + "\n"
 	{{- range  .Attributes}}
-	{{- if and .Mandatory (not (isNestedListSet .)) .MinimumTestValue (not .ExcludeTest) (not .Sensitive) (not .TfOnly) (not .Value)}}
+	{{- if and .Mandatory (not (isNestedListSet .)) .MinimumTestValue (not .ExcludeTest) (not .TfOnly) (not .Value)}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `	{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
@@ -162,28 +162,28 @@ func testAccSdwan{{camelCase .Name}}FeatureTemplateConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += ` device_types = ["vedge-C8000V"]` + "\n"
 	{{- range  .Attributes}}
-	{{- if and (not .ExcludeTest) (not .Sensitive)}}
+	{{- if not .ExcludeTest}}
 	{{- if isNestedListSet .}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	config += `	{{.TfName}} = [{` + "\n"
 		{{- range  .Attributes}}
-		{{- if and (not .ExcludeTest) (not .Sensitive)}}
+		{{- if not .ExcludeTest}}
 		{{- if isNestedListSet .}}
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 	config += `	  {{.TfName}} = [{` + "\n"
 			{{- range  .Attributes}}
-			{{- if and (not .ExcludeTest) (not .Sensitive)}}
+			{{- if not .ExcludeTest}}
 			{{- if isNestedListSet .}}
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			{{- end}}
 	config += `      {{.TfName}} = [{` + "\n"
 				{{- range  .Attributes}}
-				{{- if and (not .ExcludeTest) (not .Sensitive)}}
+				{{- if not .ExcludeTest}}
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
